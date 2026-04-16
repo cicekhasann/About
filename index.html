@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hasan Çiçek | Systems & Software Engineer | Root Access</title>
-    <meta name="description" content="System-oriented Software Engineer specializing in network systems, backend development, and high-performance infrastructure. Expert in FreeBSD, Linux, and Concurrency.">
+    <title>Hasan Çiçek | Systems & Software Engineer</title>
+    <meta name="description" content="Systems & Software Engineer specializing in high-performance network architectures, backend logic, and scalable infrastructure.">
     
-    <!-- Fonts -->
+    <!-- Fonts: Inter for UI, JetBrains for Data -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -17,337 +17,240 @@
     <!-- Custom Style -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="crt">
-    <div class="scanlines"></div>
-    
-    <!-- System Status Bar -->
-    <div class="system-bar">
-        <div class="container container-wide">
-            <div class="status-items">
-                <div class="status-item"><span class="label">HOST:</span> <span class="val">HASAN_SRV_01</span></div>
-                <div class="status-item"><span class="label">LOC:</span> <span class="val">GLOBAL</span></div>
-                <div class="status-item"><span class="label">OS:</span> <span class="val">FreeBSD 14.3</span></div>
-                <div class="status-item">
-                    <span class="label">THEME:</span>
-                    <div class="theme-dots">
-                        <span class="theme-dot green active" onclick="setTheme('green')" title="Kernel Green"></span>
-                        <span class="theme-dot blue" onclick="setTheme('blue')" title="Cyber Blue"></span>
-                        <span class="theme-dot amber" onclick="setTheme('amber')" title="Retro Amber"></span>
-                        <span class="theme-dot red" onclick="setTheme('red')" title="Alert Red"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="time-item" id="system-clock">12:30:23</div>
-        </div>
-    </div>
+<body class="modern-theme system-dash">
+    <!-- UI Overlays -->
+    <div class="grid-overlay"></div>
+    <div class="page-progress"></div>
 
     <!-- Navigation -->
-    <nav class="nav-terminal">
-        <div class="container">
-            <div class="nav-brand">HASAN</div>
-            <ul class="nav-menu">
-                <li><a href="#hero">01_ROOT</a></li>
-                <li><a href="#about">02_PROFILE</a></li>
-                <li><a href="#skills">03_STACK</a></li>
-                <li><a href="#experience">04_LOGS</a></li>
-                <li><a href="#projects">05_REPO</a></li>
-            </ul>
+    <header class="main-header">
+        <div class="container container-wide">
+            <div class="header-inner">
+                <div class="logo">HASAN<span class="dot">.</span> <span class="sys-version">v3.1_NODE_ACTIVE</span></div>
+                <nav class="main-nav">
+                    <ul class="nav-list">
+                        <li><a href="#about" class="active">/PROFILE</a></li>
+                        <li><a href="#skills">/STACK</a></li>
+                        <li><a href="#experience">/ACTIVITY</a></li>
+                        <li><a href="#projects">/REPO</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="https://github.com/cicekhasann/About/raw/main/Hasan_Cicek_Resume.pdf" class="btn btn-primary">
+                        <i class="ph ph-terminal"></i> GET_RESUME.SH
+                    </a>
+                </div>
+            </div>
         </div>
-    </nav>
+    </header>
 
-    <main class="dashboard-wrapper">
-        <!-- Hero Section -->
-        <section id="hero" class="hero-terminal">
-            <div class="container">
-                <div class="terminal-container">
-                    <div class="terminal-header">
-                        <div class="terminal-dots">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
+    <main class="main-content">
+        <!-- Hero Section: Glitch & Diagnostics -->
+        <section id="about" class="hero-section">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="badge fade-in"><span class="pulse-mini"></span> SYSTEM_ENGINEER_STABLE</div>
+                    
+                    <!-- Restored Glitch Name -->
+                    <h1 class="glitch-container fade-in">
+                        <span class="glitch" data-text="HASAN">HASAN</span> 
+                        <span class="glitch" data-text="ÇİÇEK">ÇİÇEK</span>
+                    </h1>
+
+                    <p class="hero-summary fade-in">
+                        Specializing in high-availability infrastructures, packet-level networking, 
+                        and kernel-space performance optimization for mission-critical production environments.
+                    </p>
+
+                    <div class="hero-metrics fade-in">
+                        <div class="metric">
+                            <span class="m-label">NETWORK_THROUGHPUT</span>
+                            <div class="m-bar"><div class="m-fill" style="width: 85%"></div></div>
+                            <span class="m-val">2.4 Gbps / 30k CONC</span>
                         </div>
-                        <div class="terminal-title">hasan@kernel: ~ (zsh)</div>
-                        <div class="terminal-actions">
-                            <a href="https://github.com/cicekhasann/About/raw/main/Hasan_Cicek_Resume.pdf" class="term-btn"><i class="ph ph-download-simple"></i> GET_RESUME.PDF</a>
+                        <div class="metric">
+                            <span class="m-label">INFRA_STABILITY</span>
+                            <div class="m-bar"><div class="m-fill" style="width: 99.9%"></div></div>
+                            <span class="m-val">99.9% UPTIME</span>
                         </div>
                     </div>
-                    <div class="terminal-body" id="terminal-output">
-                        <div class="line">
-                            <span class="prompt">$</span>
-                            <span class="command">whoami --full-profile</span>
+                </div>
+
+                <!-- NEW: Node Diagnostics Panel -->
+                <div class="hero-diagnostics reveal">
+                    <div class="diag-card">
+                        <div class="diag-header">
+                            <i class="ph ph-activity"></i> <span>NODE_DIAGNOSTICS_V4</span>
                         </div>
-                        <div class="line output">
-                            <h1 class="glitch-container">
-                                <span class="glitch" data-text="HASAN">HASAN</span> 
-                                <span class="glitch" data-text="ÇİÇEK">ÇİÇEK</span>
-                            </h1>
-                            <p class="role">Systems & Software Engineer</p>
-                            <p class="contact-info">
-                                <i class="ph ph-globe"></i> Location: GLOBAL
-                            </p>
+                        <div class="diag-body">
+                            <div class="diag-line"><span class="lbl">KERNEL:</span> <span class="val">FreeBSD 14.3-RELEASE</span></div>
+                            <div class="diag-line"><span class="lbl">UPTIME:</span> <span class="val">231 DAYS, 14:02:01</span></div>
+                            <div class="diag-line"><span class="lbl">MEM_LOAD:</span> <div class="mini-bar"><div style="width: 32%"></div></div></div>
+                            <div class="diag-line"><span class="lbl">STACK:</span> <span class="val">NODE / DOCKER / C++</span></div>
                         </div>
-                        <div class="line">
-                            <span class="prompt">$</span>
-                            <span class="command">tail -n 1 summary.log</span>
-                        </div>
-                        <div class="line output typewrite" data-text="System-oriented Software Engineer specializing in network systems, backend & systems development, and large-scale infrastructure. Expert in packet flow, system architecture, and optimization.">
-                        </div>
-                        <div class="line cursor-line">
-                            <span class="prompt">$</span>
-                            <span class="cursor"></span>
+                        <div class="diag-footer">
+                            <span class="blink">●</span> LOCAL_HOST_HASAN: LISTENING...
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Profile Detail -->
-        <section id="about" class="section">
-            <div class="container">
-                <div class="widget">
-                    <div class="widget-header">
-                        <i class="ph ph-scroll"></i>
-                        <h2>PROFESSIONAL_SUMMARY.DOC</h2>
+        <!-- Stats Ribbon -->
+        <section class="stats-ribbon">
+            <div class="container container-wide">
+                <div class="ribbon-grid">
+                    <a href="https://github.com/cicekhasann" target="_blank" class="ribbon-item">
+                        <i class="ph ph-github-logo"></i> <span>github/cicekhasann</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/cicekhasan/" target="_blank" class="ribbon-item">
+                        <i class="ph ph-linkedin-logo"></i> <span>linkedin/cicekhasan</span>
+                    </a>
+                    <div class="ribbon-item">
+                        <i class="ph ph-envelope-simple"></i> <span>contact@hasancicek.com</span>
                     </div>
-                    <div class="widget-body about-text">
-                        <p>
-                            I specialize in building high-performance, scalable systems with a deep understanding of 
-                            <strong>low-level networking</strong>, <strong>packet flow</strong>, and <strong>system architecture</strong>. 
-                            My experience includes troubleshooting production bottlenecks, implementing <strong>concurrency controls</strong> (Mutex/Locking), 
-                            and optimizing hardware utilization to deliver highly efficient, custom-built engineering solutions.
-                        </p>
+                    <div class="ribbon-item">
+                        <i class="ph ph-globe"></i> <span>ZONE: GLOBAL</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Skills Dashboard -->
+        <!-- Skills Grid -->
         <section id="skills" class="section">
             <div class="container">
-                <div class="section-title-wrapper">
-                    <span class="prefix">[/]</span>
-                    <h2 class="section-glitch-title">HARDWARE_&_STACK_DIAGNOSTICS</h2>
+                <div class="section-header">
+                    <h2 class="section-title">Backend & Network Artifacts</h2>
+                    <p class="section-subtitle">Deep systems architecture and performance tools.</p>
                 </div>
                 
-                <div class="dashboard-grid full-grid">
-                    <!-- Net & Ops -->
-                    <div class="card card-tech">
-                        <div class="card-glow"></div>
-                        <div class="card-content">
-                            <div class="card-header"><i class="ph ph-globe-hemisphere-west"></i><h3>NETWORKING_&_OPS</h3></div>
-                            <div class="skill-tags">
-                                <span class="tag">FreeBSD</span><span class="tag">Linux (Advanced)</span>
-                                <span class="tag">Network Namespaces</span><span class="tag">veth pairs</span>
-                                <span class="tag">PF (Packet Filter)</span><span class="tag">ipfw</span>
-                                <span class="tag">TCP/IP</span><span class="tag">IP Routing</span><span class="tag">NAT</span>
-                                <span class="tag">DNS</span><span class="tag">OpenVPN</span>
-                            </div>
+                <div class="grid grid-4">
+                    <div class="glass-card">
+                        <div class="card-icon blue"><i class="ph ph-globe"></i></div>
+                        <h3>Net & Ops</h3>
+                        <div class="capsules">
+                            <span>FreeBSD</span><span>Network Namespaces</span><span>veth pairs</span>
+                            <span>PF/ipfw</span><span>TCP/IP</span><span>iperf3</span>
                         </div>
                     </div>
-
-                    <!-- Security -->
-                    <div class="card card-tech">
-                        <div class="card-glow"></div>
-                        <div class="card-content">
-                            <div class="card-header"><i class="ph ph-shield-star"></i><h3>CYBER_SECURITY</h3></div>
-                            <div class="skill-tags">
-                                <span class="tag">Snort (IDS/IPS)</span><span class="tag">Squid Proxy</span>
-                                <span class="tag">PKI Design</span><span class="tag">SSL Management</span>
-                                <span class="tag">PAM (Zetaccess)</span><span class="tag">Threat Prevention</span>
-                                <span class="tag">Vulnerability Audit</span>
-                            </div>
+                    <div class="glass-card">
+                        <div class="card-icon red"><i class="ph ph-shield-check"></i></div>
+                        <h3>Security</h3>
+                        <div class="capsules">
+                            <span>Snort (IDS/IPS)</span><span>PKI Design</span><span>Zetaccess</span>
+                            <span>SSL Audit</span><span>Squid Proxy</span>
                         </div>
                     </div>
-
-                    <!-- Logic -->
-                    <div class="card card-tech">
-                        <div class="card-glow"></div>
-                        <div class="card-content">
-                            <div class="card-header"><i class="ph ph-cpu"></i><h3>BACKEND_LOGIC</h3></div>
-                            <div class="skill-tags">
-                                <span class="tag">Node.js</span><span class="tag">JavaScript (ES6+)</span>
-                                <span class="tag">Bash Scripting</span><span class="tag">WebSocket</span>
-                                <span class="tag">REST API</span><span class="tag">Microservices</span>
-                                <span class="tag">Concurrency (Mutex)</span><span class="tag">Python (Basic)</span>
-                            </div>
+                    <div class="glass-card">
+                        <div class="card-icon cyan"><i class="ph ph-cpu"></i></div>
+                        <h3>Logic</h3>
+                        <div class="capsules">
+                            <span>Node.js</span><span>WebSocket</span><span>Mutex Logic</span>
+                            <span>Microservices</span><span>Bash Scripts</span>
                         </div>
                     </div>
-
-                    <!-- Tools & Infra -->
-                    <div class="card card-tech">
-                        <div class="card-glow"></div>
-                        <div class="card-content">
-                            <div class="card-header"><i class="ph ph-stack"></i><h3>INFRA_&_DATA</h3></div>
-                            <div class="skill-tags">
-                                <span class="tag">Docker Swarm (Prod)</span><span class="tag">Kubernetes</span>
-                                <span class="tag">Nginx (Stream/UDP)</span><span class="tag">Syslog-ng</span>
-                                <span class="tag">iperf3</span><span class="tag">Git / CI/CD</span>
-                                <span class="tag">PostgreSQL</span><span class="tag">SQLite</span>
-                            </div>
+                    <div class="glass-card">
+                        <div class="card-icon silver"><i class="ph ph-stack"></i></div>
+                        <h3>Infra</h3>
+                        <div class="capsules">
+                            <span>Docker Swarm</span><span>Kubernetes</span><span>Nginx Stream</span>
+                            <span>PostgreSQL</span><span>Syslog-ng</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Experience: Event Log -->
-        <section id="experience" class="section">
-            <div class="container">
-                <div class="widget widget-logs">
-                    <div class="widget-header">
-                        <i class="ph ph-terminal-window"></i>
-                        <h2>PROD_SERVER_EVENT_LOGS</h2>
+        <!-- Experience Feed -->
+        <section id="experience" class="section alt-bg">
+            <div class="container container-narrow">
+                <div class="section-header center">
+                    <h2 class="section-title">Deployment Activity Feed</h2>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item reveal">
+                        <div class="t-date">Jun 2024 - Present</div>
+                        <div class="t-content">
+                            <h3>Backend & Systems Engineer</h3>
+                            <div class="t-company">ePati Cyber Security</div>
+                            <ul class="t-list">
+                                <li>Engineered VPN framework for 30k concurrent clients.</li>
+                                <li>Optimized FreeBSD/Linux packet flow via PF.</li>
+                                <li>Reduced microservice memory overhead by 30%.</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="widget-body log-body">
-                        <!-- ePati Full Time -->
-                        <div class="log-group">
-                            <div class="log-header">
-                                <span class="timestamp">Jun 2024 - PRESENT</span>
-                                <span class="label info">[ROLE]</span>
-                                <h3>Backend & Systems Engineer @ ePati Cyber Security</h3>
-                            </div>
-                            <div class="log-entries">
-                                <div class="log-entry"><span class="prefix">>></span> Engineered VPN framework for 30,000+ concurrent clients (~2 Gbps throughput).</div>
-                                <div class="log-entry"><span class="prefix">>></span> Optimized packet flow & routing via PF/ipfw across FreeBSD/Linux stacks.</div>
-                                <div class="log-entry"><span class="prefix">>></span> Orchestrated PAM (Zetaccess) infrastructure using Docker Swarm.</div>
-                                <div class="log-entry"><span class="prefix">>></span> Fixed critical memory leaks, reducing footprint by ~30% under high load.</div>
-                                <div class="log-entry"><span class="prefix">>></span> Implemented Mutex/Locking strategies to prevent race conditions in microservices.</div>
-                                <div class="log-entry"><span class="prefix">>></span> Replaced bottleneck components with custom solutions: +35% efficiency boost.</div>
-                            </div>
-                        </div>
-
-                        <!-- ePati Intern -->
-                        <div class="log-group">
-                            <div class="log-header">
-                                <span class="timestamp">Feb 2024 - Jun 2024</span>
-                                <span class="label success">[INTERN]</span>
-                                <h3>Software Engineering Intern @ ePati</h3>
-                            </div>
-                            <div class="log-entries">
-                                <div class="log-entry"><span class="prefix">>></span> Developed infrastructure improvements reducing manual config times by ~40%.</div>
-                            </div>
-                        </div>
-
-                        <!-- University Intern -->
-                        <div class="log-group">
-                            <div class="log-header">
-                                <span class="timestamp">Jun 2022 - Sep 2022</span>
-                                <span class="label success">[INTERN]</span>
-                                <h3>Software Developer Intern @ Mersin University IT</h3>
-                            </div>
+                    <div class="timeline-item reveal">
+                        <div class="t-date">Feb 2024 - Jun 2024</div>
+                        <div class="t-content">
+                            <h3>Software Engineering Intern</h3>
+                            <div class="t-company">ePati Cyber Security</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Key Projects -->
+        <!-- Projects Dashboard -->
         <section id="projects" class="section">
             <div class="container">
-                <div class="section-title-wrapper">
-                    <span class="prefix">[/]</span>
-                    <h2 class="section-glitch-title">CRITICAL_PROJECT_REPOS</h2>
+                <div class="section-header">
+                    <h2 class="section-title">Key Repository Artifacts</h2>
                 </div>
-                <div class="projects-grid">
-                    <div class="widget project-card">
-                        <h3>VPN_SIM_SYSTEM</h3>
-                        <p>Simulating 30,000+ concurrent clients using Linux Namespaces & veth pairs. Designed for benchmarking & stress testing.</p>
-                        <div class="tech-stack">#FreeBSD #Networking #OpenVPN</div>
-                    </div>
-                    <div class="widget project-card">
-                        <h3>WEBSOCKET_MONITOR</h3>
-                        <p>High-concurrency monitoring framework using Node.js, Syslog-ng, and iperf3 for real-time network analysis.</p>
-                        <div class="tech-stack">#NodeJS #WebSocket #iperf3</div>
-                    </div>
-                    <div class="widget project-card">
-                        <h3>PKI_SSL_MODULE</h3>
-                        <p>Architected a centralized PKI module from scratch to manage critical internal SSL certificates (LDAP/Safebrowsing).</p>
-                        <div class="tech-stack">#Security #SSL #PKI</div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Final Diagnostics -->
-        <section class="section">
-            <div class="container grid-two">
-                <div class="edu-terminal">
-                   <div class="widget-header"><h3>EDUCATION.SH</h3></div>
-                   <p><span class="label">UNI:</span> Mersin University</p>
-                   <p><span class="label">DEGREE:</span> Computer Engineering</p>
-                   <p><span class="label">YEARS:</span> 2018 - Present</p>
+                <div class="grid grid-3">
+                    <div class="project-box">
+                        <div class="p-header">
+                            <span class="p-status">STABLE</span>
+                            <h3>VPN_SIM_SYSTEM</h3>
+                        </div>
+                        <p>30k client simulation framework using Linux Namespaces.</p>
+                        <div class="p-footer">#FreeBSD #Networking</div>
+                    </div>
+                    <div class="project-box">
+                        <div class="p-header">
+                            <span class="p-status">PROD</span>
+                            <h3>WEBSOCKET_MONITOR</h3>
+                        </div>
+                        <p>High-concurrency monitoring using iperf3 & Node.js.</p>
+                        <div class="p-footer">#NodeJS #Systems</div>
+                    </div>
+                    <div class="project-box">
+                        <div class="p-header">
+                            <span class="p-status">CORE</span>
+                            <h3>PKI_SSL_MODULE</h3>
+                        </div>
+                        <p>Custom certificate management for internal LDAP systems.</p>
+                        <div class="p-footer">#Security #PKI</div>
+                    </div>
                 </div>
-                <div class="edu-terminal">
-                    <div class="widget-header"><h3>CERTIFICATES.LOG</h3></div>
-                    <p><span class="label">CCNA:</span> Intro to Networks & IT Essentials</p>
-                    <p><span class="label">STATUS:</span> Active / Certified</p>
-                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer-terminal">
+    <footer class="main-footer">
         <div class="container">
             <div class="footer-row">
-                <div class="footer-left">
-                    <p class="copyright">System ready. kernel@hasan: ~ (root) &copy; 2024</p>
-                </div>
-                <div class="footer-right">
-                    <div class="social-icons">
-                        <a href="https://github.com/cicekhasann" target="_blank" title="GitHub"><i class="ph ph-github-logo"></i></a>
-                        <a href="https://www.linkedin.com/in/cicekhasan/" target="_blank" title="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
-                        <a href="mailto:contact@hasancicek.com" title="Email"><i class="ph ph-envelope-simple"></i></a>
-                    </div>
+                <div class="f-copy">&copy; 2024 Hasan Çiçek. System Engineer.</div>
+                <div class="f-status">
+                    <span class="status-pulse"></span> NODE_01: ACTIVE [LATENCY: 12ms]
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Theme Switcher Logic
-        function setTheme(theme) {
-            // Remove all theme classes
-            document.body.classList.remove('theme-green', 'theme-blue', 'theme-amber', 'theme-red');
-            // Add new theme class
-            document.body.classList.add('theme-' + theme);
-            
-            // Update active dot
-            document.querySelectorAll('.theme-dot').forEach(dot => {
-                dot.classList.remove('active');
-                if (dot.classList.contains(theme)) {
-                    dot.classList.add('active');
+        // Smooth reveal on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
                 }
             });
+        }, { threshold: 0.1 });
 
-            // Save preference
-            localStorage.setItem('hasan-theme', theme);
-        }
-
-        // Load saved theme
-        const savedTheme = localStorage.getItem('hasan-theme') || 'green';
-        setTheme(savedTheme);
-
-        // Typing Effect logic
-        document.querySelectorAll('.typewrite').forEach(el => {
-            const text = el.getAttribute('data-text');
-            let i = 0;
-            el.innerHTML = '';
-            function type() {
-                if (i < text.length) {
-                    el.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, 15);
-                }
-            }
-            type();
-        });
-
-        // Clock logic
-        setInterval(() => {
-            const clock = document.getElementById('system-clock');
-            const now = new Date();
-            clock.textContent = now.toTimeString().split(' ')[0];
-        }, 1000);
+        document.querySelectorAll('.reveal, .fade-in').forEach((el) => observer.observe(el));
     </script>
 </body>
 </html>
