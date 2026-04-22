@@ -46,7 +46,7 @@ function initTerminal() {
   _    _         _____          _   _ 
  | |  | |  /\\    / ____|   /\\   | \\ | |
  | |__| | /  \\  | (___    /  \\  |  \\| |
- |  __  |/ /\\ \\  \\___ \\  / /\\ \\ | . \` |
+ |  __  |/ /\\ \\  \\___ \\  / /\\ \\ | . \\\` |
  | |  | / ____ \\ ____) |/ ____ \\| |\\  |
  |_|  |/_/    \\_\\_____//_/    \\_\\_| \\_|
                                        
@@ -443,7 +443,6 @@ function initTerminal() {
         player.x = tx - player.w / 2;
         player.x = Math.max(0, Math.min(gCanvas.width - player.w, player.x));
         if (isGamePaused) startGame();
-    }
     }
 
     function stopPixelGame() { isGameRunning = false; cancelAnimationFrame(gameLoop); gameContainer.classList.add('hidden'); setTimeout(() => input.focus(), 100); }
