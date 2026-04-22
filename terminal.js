@@ -209,7 +209,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function stopPixelGame() { isGameRunning = false; cancelAnimationFrame(gameLoop); gameContainer.classList.add('hidden'); window.removeEventListener('keydown', gameKeyDown); window.removeEventListener('keyup', gameKeyUp); setTimeout(() => input.focus(), 100); }
 
-    function gameKeyDown(e) { if(e.code==='Space' && isGamePaused) { isGamePaused = false; document.getElementById('game-overlay').classList.add('hidden'); } if(e.code==='Escape') stopPixelGame(); keys[e.code] = true; }
+    function gameKeyDown(e) { 
+        if(e.code==='Space') {
+            if (!isGameRunning) {
+                startPixelGame(); // Restart fresh
+            } else if (isGamePaused) {
+                isGamePaused = false; 
+                document.getElementById('game-overlay').classList.add('hidden'); 
+            }
+        } 
+        if(e.code==='Escape') stopPixelGame(); 
+        keys[e.code] = true; 
+    }
     function gameKeyUp(e) { keys[e.code] = false; }
 
     function gameUpdateLoop(timestamp) {
@@ -278,12 +289,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isGameRunning) gameLoop = requestAnimationFrame(gameUpdateLoop);
     }
 
+    document.getElementById('game-logout-btn').addEventListener('click', () => {
+        commands.logout();
+        stopPixelGame();
+        printLine("Session terminated via Dashboard.", "error");
+    });
+
     async function gameOver() {
         isGameRunning = false;
-        document.getElementById('game-overlay').classList.remove('hidden');
-        document.getElementById('game-overlay').querySelector('.game-msg-big').innerText = "SYSTEM CRASHED!";
+        const overlay = document.getElementById('game-overlay');
+        overlay.classList.remove('hidden');
+        overlay.querySelector('.game-msg-big').innerText = "SYSTEM CRASHED!";
+        
         const sb = getSupabase();
         if (sb && currentUser && currentPass) {
+            printLine("Syncing global record...");
             const { data } = await sb.from('leaderboard').select('*').eq('name', currentUser).single();
             if (data) {
                 const newHistory = [...(data.history || []), { score: gameScore, date: new Date().toISOString() }].slice(-5);
@@ -292,7 +312,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (gameScore > guestHighScore) {
             guestHighScore = gameScore; localStorage.setItem('hasan_guest_score', guestHighScore);
         }
-        setTimeout(stopPixelGame, 2000);
+
+        setTimeout(() => {
+            if (!isGameRunning) {
+                overlay.querySelector('.game-msg-big').innerText = "REBOOT READY";
+                overlay.querySelector('.game-controls').innerText = "PRESS SPACE TO RESTART";
+            }
+        }, 1500);
     }
 
     function roundRect(ctx, x, y, width, height, radius, fill) { ctx.beginPath(); ctx.moveTo(x + radius, y); ctx.lineTo(x + width - radius, y); ctx.quadraticCurveTo(x + width, y, x + width, y + radius); ctx.lineTo(x + width, y + height - radius); ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height); ctx.lineTo(x + radius, y + height); ctx.quadraticCurveTo(x, y + height, x, y + height - radius); ctx.lineTo(x, y + radius); ctx.quadraticCurveTo(x, y, x + radius, y); ctx.closePath(); if (fill) ctx.fill(); else ctx.stroke(); }
