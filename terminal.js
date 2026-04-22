@@ -62,16 +62,19 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         'projects': () => {
             printLine("ARCHITECTURE ARTIFACTS:", "cmd");
-            printLine("  1. VPN_JAIL_SIM - 35k node simulation with custom PF routing");
+            printLine("  1. VPN_JAIL_SIM      - 35k node simulation with custom PF routing");
             printLine("  2. BASH_RC_AUTOMATOR - Framework for FreeBSD production services");
-            printLine("  3. NODE_MONITOR_APP - Real-time system diagnostics tool (Electron)");
+            printLine("  3. NODE_MONITOR_APP  - Real-time system diagnostics tool (Electron)");
+            printLine("  4. LIMITED_SHELL     - Secure environment restriction system");
+            printLine("  5. ZETACCESS_PAM     - PAM infrastructure and authentication module");
         },
         'repos': () => {
-            printLine("FETCHING ARTIFACTS...", "cmd");
+            printLine("FETCHING PERSONAL REPOSITORIES...", "cmd");
             setTimeout(() => {
-                printLine("- About (Current portfolio)");
-                printLine("- Livepcap-Analyzer (Go network tool)");
-                printLine("- FreeBSD-Kernel-Config (Custom build scripts)");
+                printLine("- About (Modern portfolio system)");
+                printLine("- FreeBSD-Service-Scripts (RC logic collection)");
+                printLine("- Jail-Orchestrator (Node.js backend for jails)");
+                printLine("- Snort-Tuning-Config (Production IDS rules)");
             }, 500);
         },
         'theme': (args) => {
