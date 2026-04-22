@@ -59,11 +59,66 @@ document.addEventListener('DOMContentLoaded', () => {
     [ Operator: ${currentUser || 'GUEST_EXPLOITER'} ]
     `;
 
+    const virtualFiles = {
+        'about.txt': "Systems & Software Engineer specializing in FreeBSD, Network Orchestration, and High-Concurrency systems. Operator of the Hasan_Prod node.",
+        'skills.md': "Core: FreeBSD, Bash, Python, Node.js\nNetwork: Snort, Squid, PF Firewall, Redis\nHigh-Level: React, Electron, Microservices",
+        'contact.env': "Email: hasan@operator.grid\nLocation: Istanbul Grid Node\nStatus: Available for complex orchestration."
+    };
+
     const commands = {
         'help': () => printHelp(),
         '?': () => printHelp(),
         'clear': () => { output.innerHTML = ''; },
         'exit': () => toggleTerminal(false),
+        'ls': () => {
+            printLine("Directory: /home/hasan", "cmd");
+            Object.keys(virtualFiles).forEach(f => printLine(`  -rwxr-xr-x  1 hasan hasan  1024 Apr 22 14:54 ${f}`));
+        },
+        'cat': (args) => {
+            if (!args[0]) { printLine("Usage: cat [filename]", "error"); return; }
+            if (virtualFiles[args[0]]) printLine(virtualFiles[args[0]]);
+            else printLine(`cat: ${args[0]}: No such file or directory`, "error");
+        },
+        'whoami': () => {
+            printLine("ID: " + (currentUser || "GUEST_EXPLOITER"));
+            printLine("ACCESS_LEVEL: " + (currentUser ? "OPERATOR" : "ANONYMOUS"));
+            printLine("SHELL: /usr/local/bin/hasan_shell");
+        },
+        'skills': () => {
+            printLine("TECHNICAL REPERTOIRE:", "cmd");
+            printLine("----------------------");
+            printLine("[ ] FREEBSD KERNEL TUNING");
+            printLine("[ ] NETWORK ORCHESTRATION");
+            printLine("[ ] BASH-TO-SERVICE AUTOMATION");
+            printLine("[ ] MICROSERVICES ARCHITECTURE");
+        },
+        'socials': () => {
+            printLine("GRID CONNECTIONS:", "cmd");
+            printLine("  GitHub   : github.com/cicekhasann");
+            printLine("  LinkedIn : linkedin.com/in/hasancicek");
+        },
+        'repos': () => {
+            printLine("FETCHING REPOSITORY DATA...", "cmd");
+            const projects = [
+                { name: "LivePcap-Analyzer", desc: "High-performance packet analysis engine.", stars: 42 },
+                { name: "Antikor-OS", desc: "FreeBSD based network security distribution.", stars: 128 },
+                { name: "Electron-Kesim-Plani", desc: "Professional furniture cutting optimization.", stars: 15 },
+                { name: "Portfolio-v5", desc: "The terminal you are currently using.", stars: 99 }
+            ];
+            projects.forEach(p => {
+                printLine(`>> ${p.name.padEnd(25)} [STARS: ${p.stars}]`);
+                printLine(`   DESC: ${p.desc}`, "success");
+            });
+        },
+        'theme': (args) => {
+            const themes = ['matrix', 'neon', 'cyber', 'plasma'];
+            if (!args[0] || !themes.includes(args[0])) {
+                printLine(`Usage: theme [${themes.join('|')}]`, "error");
+                return;
+            }
+            document.body.className = `theme-${args[0]}`;
+            printLine(`Theme switched to ${args[0].toUpperCase()}.`, "success");
+        },
         'register': async (args) => {
             if (currentUser) { printLine(`ACCESS DENIED: Linked to ${currentUser}.`, "error"); return; }
             if (!args[0] || !args[1]) { printLine("Usage: register [name] [password]", "error"); return; }
@@ -93,11 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         'leaderboard': async () => {
-            printLine("FETCHING STANDINGS...", "cmd");
+            printLine("FETCHING GLOBAL STANDINGS...", "cmd");
             const sb = getSupabase();
             if (!sb) return;
             const { data } = await sb.from('leaderboard').select('name, score').order('score', { ascending: false }).limit(10);
-            if (data) data.forEach((row, i) => printLine(`${(i === 0) ? "👑 " : `${i+1}. `}${row.name.padEnd(15)} - ${row.score} pts`));
+            if (data) data.forEach((row, i) => printLine(`${(i === 0) ? "[TOP] " : `${(i+1).toString().padStart(2, '0')}. `}${row.name.padEnd(15)} - ${row.score} pts`));
         },
         'game': () => startPixelGame(),
         'logout': () => {
