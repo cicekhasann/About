@@ -20,6 +20,7 @@
 <body class="modern-theme system-dash">
     <!-- UI Overlays -->
     <div class="grid-overlay"></div>
+    <canvas id="matrix-canvas"></canvas>
     <div class="page-progress"></div>
 
     <!-- Navigation -->
@@ -36,9 +37,9 @@
                     </ul>
                 </nav>
                 <div class="header-actions">
-                    <a href="https://github.com/cicekhasann/About/raw/main/Hasan_Cicek_Resume.pdf" class="btn btn-primary">
-                        <i class="ph ph-terminal-window"></i> GET_RESUME.SH
-                    </a>
+                    <button id="terminal-trigger" class="btn btn-primary">
+                        <i class="ph ph-terminal-window"></i> TERMINAL.EXE
+                    </button>
                 </div>
             </div>
         </div>
@@ -133,6 +134,7 @@
                             <span>FreeBSD Mastery</span><span>Jail Management</span>
                             <span>PF (SNAT/BINAT/Rules)</span><span>OpenVPN Arch</span>
                             <span>Traffic Analysis</span><span>Deep Packet Inspect</span>
+                            <span>tcpdump / Wireshark</span><span>IP Routing</span>
                             <span>tcpdump / Wireshark</span><span>IP Routing</span>
                         </div>
                     </div>
@@ -265,6 +267,38 @@
         </div>
     </footer>
 
+    <!-- Terminal Overlay -->
+    <div id="terminal-overlay" class="terminal-overlay hidden">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-controls">
+                    <span class="control close"></span>
+                    <span class="control minimize"></span>
+                    <span class="control maximize"></span>
+                </div>
+                <div class="terminal-title">hasan@shell: ~ (v3.5_STABLE)</div>
+            </div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="terminal-output" id="terminal-output">
+                    <div class="line">Welcome to Hasan's Private Shell. Type <span class="cmd">'?'</span> or <span class="cmd">'help'</span> for available commands.</div>
+                </div>
+                <div class="terminal-prompt-line">
+                    <span class="prompt">hasan@shell:~$</span>
+                    <input type="text" id="terminal-input" autofocus autocomplete="off" spellcheck="false">
+                </div>
+            </div>
+            <div class="game-container hidden" id="game-container">
+                <canvas id="game-canvas"></canvas>
+                <div class="game-overlay" id="game-overlay">
+                    <div class="game-msg">PRESS SPACE TO START</div>
+                    <div class="game-score">SCORE: 0</div>
+                </div>
+                <div class="game-controls">Press 'ESC' to exit game</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="terminal.js"></script>
     <script>
         // Smooth reveal on scroll
         const observer = new IntersectionObserver((entries) => {
@@ -278,4 +312,5 @@
         document.querySelectorAll('.reveal, .fade-in').forEach((el) => observer.observe(el));
     </script>
 </body>
+
 </html>
