@@ -1,6 +1,6 @@
 /**
  * Hasan's Advanced Terminal, Matrix Rain & Pixel Game
- * v2.0.0 - "Master Operator Edition"
+ * v3.0.0 - "Precision & Polish Edition"
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,35 +12,62 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.getElementById('terminal-body');
     const gameContainer = document.getElementById('game-container');
     
-    // --- State Management ---
     let history = [];
     let historyIndex = -1;
     let isGameRunning = false;
     let gameLoop;
+    let keys = {}; // For continuous game movement
 
     const BANNER = `
-  _    _                               _  _            _    
- | |  | |                             | |(_)          | |   
- | |__| |  __ _  ___   __ _  _ __     | | _   ___  ___| | __
- |  __  | / _\` |/ __| / _\` || '_ \\    | || | / __|/ _ \\ |/ /
- | |  | || (_| |\\__ \\| (_| || | | |   | || || (__|  __/   < 
- |_|  |_| \\__,_||___/ \\__,_||_| |_|   |_||_| \\___|\\___|_|\\_\\
-                                                            
-    [ SYSTEM: ONLINE | NODE: HASAN_PROD | VERSION: 3.5 ]
-    [ Type 'help' to begin your session ]
+  _    _         _____          _   _ 
+ | |  | |  /\\    / ____|   /\\   | \\ | |
+ | |__| | /  \\  | (___    /  \\  |  \\| |
+ |  __  |/ /\\ \\  \\___ \\  / /\\ \\ | . \` |
+ | |  | / ____ \\ ____) |/ ____ \\| |\\  |
+ |_|  |/_/    \\_\\_____//_/    \\_\\_| \\_|
+                                       
+   _____ _____ _____ ______ _  __
+  / ____|_   _/ ____|  ____| |/ /
+ | |      | || |    | |__  | ' / 
+ | |      | || |    |  __| |  <  
+ | |____ _| || |____| |____| . \\ 
+  \\_____|_____\\_____|______|_|\\_\\
+                                       
+    [ SYSTEM: ONLINE | NODE: HASAN_PROD | VERSION: 3.5_STABLE ]
+    [ Type 'help' to see available operator commands ]
     `;
 
-    // --- Terminal Logic ---
     const commands = {
         'help': () => printHelp(),
         '?': () => printHelp(),
         'clear': () => { output.innerHTML = ''; },
         'exit': () => toggleTerminal(false),
-        'about': () => printLine("Hasan Çiçek: Systems & Software Engineer. Specialist in FreeBSD, Network Orchestration, and High-Concurrency systems."),
-        'skills': () => printLine("Kernel (FreeBSD), Network (PF, SNAT, BINAT), Security (Snort, Squid), Automation (Bash, Node.js), Web (React, PHP)."),
-        'projects': () => printLine("VPN_JAIL_SIM, BASH_RC_AUTOMATOR, NODE_MONITOR_APP. Type 'repos' for more."),
+        'about': () => {
+            printLine("HASAN ÇİÇEK - Advanced Systems & Software Engineer", "cmd");
+            printLine("Specialist in FreeBSD Mastery, High-Performance Infrastructure, and Backend Logic.");
+            printLine("Focus: Engineering ultra-scalable production nodes and kernel-level networking.");
+        },
+        'stack': () => {
+            printLine("TECHNICAL REPERTOIRE:", "cmd");
+            printLine("  [Kernel/Net]  FreeBSD, PF Firewall (NAT/SNAT/BINAT), OpenVPN, Traffic Analysis");
+            printLine("  [Services]    Docker Swarm, Nginx, Squid Proxy, Snort IDS/IPS, Kea DHCP");
+            printLine("  [Automation]  Bash-to-Service (RC scripts), Node.js, Python, Git CI/CD");
+            printLine("  [Build]       Node.js, React, Electron, Redis, PostgreSQL, C++ Concurrency");
+        },
+        'stats': () => {
+            printLine("MISSION CRITICAL METRICS:", "cmd");
+            printLine("  - SIMULATED: 35,000+ Concurrent VPN Clients in FreeBSD Jails");
+            printLine("  - PERFORMANCE: ~2.8 Gbps Throughput Benchmarking & Optimization");
+            printLine("  - CERTIFIED: CCNA (Intro to Networks & IT Essentials)");
+        },
+        'projects': () => {
+            printLine("ARCHITECTURE ARTIFACTS:", "cmd");
+            printLine("  1. VPN_JAIL_SIM - 35k node simulation with custom PF routing");
+            printLine("  2. BASH_RC_AUTOMATOR - Framework for FreeBSD production services");
+            printLine("  3. NODE_MONITOR_APP - Real-time system diagnostics tool (Electron)");
+        },
         'repos': () => {
-            printLine("Fetching artifacts from github/cicekhasann...", "cmd");
+            printLine("FETCHING ARTIFACTS...", "cmd");
             setTimeout(() => {
                 printLine("- About (Current portfolio)");
                 printLine("- Livepcap-Analyzer (Go network tool)");
@@ -65,28 +92,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         'game': () => startPixelGame(),
-        'resume': () => {
-            printLine("Downloading HASAN_RESUME.PDF...");
-            window.open('https://github.com/cicekhasann/About/raw/main/Hasan_Cicek_Resume.pdf', '_blank');
+        'contact': () => {
+            printLine("COMMUNICATIONS CHANNEL:", "cmd");
+            printLine("  Email:    contact@hasancicek.com");
+            printLine("  Location: GLOBAL_ZONE_A");
         },
-        'ls': () => printLine("about.txt  skills.md  projects.conf  game.exe  resume.sh", "success"),
-        'cat': (args) => {
-            const file = args[0];
-            if (file === 'about.txt') commands.about();
-            else if (file === 'skills.md') commands.skills();
-            else if (file === 'projects.conf') commands.projects();
-            else printLine(`cat: ${file}: No such file`, "error");
+        'social': () => {
+            printLine("EXTERNAL NODES:", "cmd");
+            printLine("  GitHub:   github/cicekhasann");
+            printLine("  LinkedIn: linkedin/cicekhasan");
         },
-        'whoami': () => printLine("guest@hasan-portfolio:~$ A curious visitor in the matrix."),
+        'whoami': () => printLine("guest@hasan-shell:~$ A terminal-bound explorer."),
         'date': () => printLine(new Date().toLocaleString()),
-        'sudo': () => printLine("Nice try, but you need higher clearance for kernel access.", "error"),
         'neofetch': () => {
             printLine("OS: FreeBSD 14.3-STABLE", "cmd");
-            printLine("Host: Hasan_Srv_Node_A");
             printLine("Kernel: 14.3-RELEASE-p1");
-            printLine("Shell: hasan-sh 2.0");
-            printLine("CPU: 32-core Virtualized Xeon");
+            printLine("Shell: hasan-sh 3.0");
+            printLine("Uptime: 255 days, 12:04:32");
+            printLine("CPU: 32-core Virtual Xeon");
             printLine("Memory: 128GB / 256GB");
+        },
+        'history': () => {
+            history.forEach((cmd, i) => printLine(`  ${i+1}  ${cmd}`));
         }
     };
 
@@ -98,36 +125,44 @@ document.addEventListener('DOMContentLoaded', () => {
         body.scrollTop = body.scrollHeight;
     }
 
+    function printBanner() {
+        const div = document.createElement('div');
+        div.className = 'banner-line';
+        div.textContent = BANNER;
+        output.appendChild(div);
+        body.scrollTop = body.scrollHeight;
+    }
+
     function printHelp() {
-        printLine("AVAILABLE COMMANDS:", "cmd");
+        printLine("AVAILABLE OPERATOR COMMANDS:", "cmd");
         const cmds = Object.keys(commands).sort();
         cmds.forEach(c => {
-            printLine(`  ${c.padEnd(12)} - Action for ${c} operation`);
+            printLine(`  ${c.padEnd(12)} - Access ${c} module`);
         });
     }
 
     function toggleTerminal(show) {
         if (show) {
             overlay.classList.remove('hidden');
-            if (output.innerHTML === '') {
-                printLine(BANNER.replace(/\n/g, '<br>'), "cmd");
+            // Force clear default text and show banner
+            if (output.innerHTML.includes("Welcome to Hasan's Private Shell") || output.innerHTML.trim() === '') {
+                output.innerHTML = '';
+                printBanner();
             }
-            setTimeout(() => input.focus(), 50); // Delay to ensure element is visible
+            setTimeout(() => input.focus(), 50);
         } else {
             overlay.classList.add('hidden');
             if (isGameRunning) stopPixelGame();
         }
     }
 
-    // Focus input whenever user clicks anywhere inside the terminal window
-    overlay.querySelector('.terminal-window').addEventListener('click', () => {
-        input.focus();
-    });
-
     trigger.addEventListener('click', () => toggleTerminal(true));
     closeBtn.addEventListener('click', () => toggleTerminal(false));
 
-    // --- Input Handling ---
+    overlay.querySelector('.terminal-window').addEventListener('click', () => {
+        if (!isGameRunning) input.focus();
+    });
+
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             const val = input.value.trim();
@@ -135,11 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 printLine(`<span class="prompt">hasan@shell:~$</span> ${val}`);
                 history.push(val);
                 historyIndex = history.length;
-                
                 const parts = val.split(' ');
                 const cmd = parts[0].toLowerCase();
                 const args = parts.slice(1);
-
                 if (commands[cmd]) commands[cmd](args);
                 else printLine(`Command not found: ${cmd}. Type '?' for help.`, "error");
             }
@@ -162,11 +195,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (e.key === 'Tab') {
             const val = input.value.trim();
             const matches = Object.keys(commands).filter(c => c.startsWith(val));
-            if (matches.length === 1) {
-                input.value = matches[0];
-            } else if (matches.length > 1) {
-                printLine(matches.join('  '), "success");
-            }
+            if (matches.length === 1) input.value = matches[0];
+            else if (matches.length > 1) printLine(matches.join('  '), "success");
             e.preventDefault();
         }
     });
@@ -182,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mCanvas.height = window.innerHeight;
         const columns = mCanvas.width / 20;
         mDrops = Array(Math.floor(columns)).fill(1);
-        
         if (mInterval) clearInterval(mInterval);
         mInterval = setInterval(drawMatrix, 50);
     }
@@ -197,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
         mCtx.fillStyle = '#0F0';
         mCtx.font = '15px monospace';
-
         for (let i = 0; i < mDrops.length; i++) {
             const text = String.fromCharCode(Math.random() * 128);
             mCtx.fillText(text, i * 20, mDrops[i] * 20);
@@ -206,14 +234,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.addEventListener('resize', () => {
-        if (document.body.classList.contains('theme-matrix')) startMatrixRain();
-    });
-
-    // --- Pixel Game: Packet Collector ---
+    // --- Pixel Game: Packet Collector v2 ---
     const gCanvas = document.getElementById('game-canvas');
     const gCtx = gCanvas.getContext('2d');
-    let player = { x: 0, y: 0, w: 20, h: 20 };
+    let player = { x: 0, y: 0, w: 25, h: 25, speed: 7 };
     let packets = [];
     let enemies = [];
     let gameScore = 0;
@@ -223,18 +247,18 @@ document.addEventListener('DOMContentLoaded', () => {
         isGameRunning = true;
         gameScore = 0;
         updateScore(0);
-        
         gCanvas.width = 400;
         gCanvas.height = 400;
-        player.x = gCanvas.width / 2 - 10;
-        player.y = gCanvas.height - 30;
+        player.x = gCanvas.width / 2 - 12;
+        player.y = gCanvas.height - 40;
         packets = [];
         enemies = [];
-
+        keys = {};
         document.getElementById('game-overlay').classList.remove('hidden');
-        document.getElementById('game-overlay').querySelector('.game-msg').innerText = "SPACE TO START | ARROWS TO MOVE";
-
-        window.addEventListener('keydown', handleGameInput);
+        document.getElementById('game-overlay').querySelector('.game-msg').innerText = "SPACE TO START | HOLD ARROWS";
+        
+        window.addEventListener('keydown', keyDownHandler);
+        window.addEventListener('keyup', keyUpHandler);
         gameLoop = requestAnimationFrame(gameUpdate);
     }
 
@@ -242,18 +266,19 @@ document.addEventListener('DOMContentLoaded', () => {
         isGameRunning = false;
         cancelAnimationFrame(gameLoop);
         gameContainer.classList.add('hidden');
-        window.removeEventListener('keydown', handleGameInput);
+        window.removeEventListener('keydown', keyDownHandler);
+        window.removeEventListener('keyup', keyUpHandler);
         input.focus();
     }
 
-    function handleGameInput(e) {
-        if (!isGameRunning) return;
+    function keyDownHandler(e) {
+        keys[e.code] = true;
         if (e.code === 'Space') document.getElementById('game-overlay').classList.add('hidden');
-        if (e.code === 'ArrowLeft') player.x -= 25;
-        if (e.code === 'ArrowRight') player.x += 25;
         if (e.code === 'Escape') stopPixelGame();
-        if (player.x < 0) player.x = 0;
-        if (player.x > gCanvas.width - player.w) player.x = gCanvas.width - player.w;
+    }
+
+    function keyUpHandler(e) {
+        keys[e.code] = false;
     }
 
     function updateScore(s) {
@@ -263,21 +288,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function gameUpdate() {
         if (!isGameRunning) return;
+
+        // Continuous Movement
+        if (keys['ArrowLeft']) player.x -= player.speed;
+        if (keys['ArrowRight']) player.x += player.speed;
+
+        if (player.x < 0) player.x = 0;
+        if (player.x > gCanvas.width - player.w) player.x = gCanvas.width - player.w;
+
         gCtx.fillStyle = '#000';
         gCtx.fillRect(0, 0, gCanvas.width, gCanvas.height);
 
+        // Scanlines effect in game
+        gCtx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+        for(let i=0; i<gCanvas.height; i+=4) gCtx.fillRect(0, i, gCanvas.width, 1);
+
         // Player
-        gCtx.fillStyle = getComputedStyle(document.body).getPropertyValue('--color-primary') || '#38bdf8';
+        gCtx.fillStyle = getComputedStyle(document.body).getPropertyValue('--color-primary').trim() || '#38bdf8';
         gCtx.fillRect(player.x, player.y, player.w, player.h);
+        gCtx.strokeStyle = '#fff';
+        gCtx.strokeRect(player.x, player.y, player.w, player.h);
 
-        // Spawning
-        if (Math.random() < 0.05) packets.push({ x: Math.random() * (gCanvas.width - 10), y: -10, w: 10, h: 10 });
-        if (Math.random() < 0.03) enemies.push({ x: Math.random() * (gCanvas.width - 10), y: -10, w: 10, h: 10 });
+        // Spawn items (Difficulty increases with score)
+        let spawnRate = 0.05 + (gameScore / 2000);
+        if (Math.random() < spawnRate) packets.push({ x: Math.random() * (gCanvas.width - 12), y: -12, w: 12, h: 12 });
+        if (Math.random() < spawnRate * 0.6) enemies.push({ x: Math.random() * (gCanvas.width - 12), y: -12, w: 12, h: 12 });
 
-        // Packets (Green)
+        // Packets
         gCtx.fillStyle = '#22c55e';
         packets.forEach((p, i) => {
-            p.y += 4;
+            p.y += 3 + (gameScore / 500);
             gCtx.fillRect(p.x, p.y, p.w, p.h);
             if (p.x < player.x + player.w && p.x + p.w > player.x && p.y < player.y + player.h && p.y + p.h > player.y) {
                 packets.splice(i, 1);
@@ -286,14 +326,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (p.y > gCanvas.height) packets.splice(i, 1);
         });
 
-        // Enemies (Red)
+        // Enemies
         gCtx.fillStyle = '#f43f5e';
         enemies.forEach((e, i) => {
-            e.y += 5;
+            e.y += 4 + (gameScore / 400);
             gCtx.fillRect(e.x, e.y, e.w, e.h);
-            if (e.x < player.x + player.w && e.x + e.w > player.x && e.y < player.y + player.h && e.y + e.h > player.y) {
-                gameOver();
-            }
+            if (e.x < player.x + player.w && e.x + e.w > player.x && e.y < player.y + player.h && e.y + e.h > player.y) gameOver();
             if (e.y > gCanvas.height) enemies.splice(i, 1);
         });
 
@@ -303,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function gameOver() {
         isGameRunning = false;
         document.getElementById('game-overlay').classList.remove('hidden');
-        document.getElementById('game-overlay').querySelector('.game-msg').innerText = "KERNEL PANIC!";
+        document.getElementById('game-overlay').querySelector('.game-msg').innerText = "SYSTEM CRASHED!";
         printLine(`GAME OVER! Score: ${gameScore}`, "error");
         setTimeout(stopPixelGame, 2000);
     }

@@ -213,17 +213,17 @@ body.theme-matrix #matrix-canvas { opacity: 0.15; }
 .terminal-header {
     background: rgba(255, 255, 255, 0.05);
     padding: 0.8rem 1.2rem;
-    display: flex; align-items: center; gap: 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--color-border);
 }
 
-.terminal-controls { display: flex; gap: 0.6rem; }
+.terminal-controls { display: flex; gap: 0.6rem; order: 2; }
 .control { width: 12px; height: 12px; border-radius: 50%; display: inline-block; cursor: pointer; }
-.control.close { background: #ff5f56; }
 .control.minimize { background: #ffbd2e; }
 .control.maximize { background: #27c93f; }
+.control.close { background: #ff5f56; }
 
-.terminal-title { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-dim); }
+.terminal-title { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-dim); order: 1; }
 
 .terminal-body {
     flex-grow: 1; padding: 1.5rem;
@@ -235,6 +235,7 @@ body.theme-matrix #matrix-canvas { opacity: 0.15; }
 
 .terminal-output { display: flex; flex-direction: column; gap: 0.4rem; }
 .terminal-output .line { color: var(--color-text); line-height: 1.4; }
+.terminal-output .banner-line { color: var(--color-primary); white-space: pre; font-size: 0.7rem; line-height: 1.1; margin-bottom: 1rem; }
 .terminal-output .cmd { color: var(--color-primary); font-weight: 700; }
 .terminal-output .error { color: var(--color-accent-red); }
 .terminal-output .success { color: #22c55e; }
