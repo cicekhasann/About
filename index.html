@@ -1,23 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hasan Çiçek | Systems & Software Engineer</title>
-    <meta name="description" content="Systems & Software Engineer specializing in FreeBSD mastery, network orchestration, and high-concurrency architecture. Experts in Bash-to-Service automation and microservices.">
-    
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.js"></script>
+    <meta
+      name="description"
+      content="Systems & Software Engineer specializing in FreeBSD mastery, network orchestration, and high-concurrency architecture. Experts in Bash-to-Service automation and microservices."
+    />
+
     <!-- Fonts: Inter for UI, JetBrains for Data -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
+
     <!-- Custom Style -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="modern-theme system-dash">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="modern-theme system-dash">
     <!-- UI Overlays -->
     <div class="grid-overlay"></div>
     <canvas id="matrix-canvas"></canvas>
@@ -25,292 +33,404 @@
 
     <!-- Navigation -->
     <header class="main-header">
-        <div class="container container-wide">
-            <div class="header-inner">
-                <div class="logo">HASAN<span class="dot">.</span> <span class="sys-version">v3.5_STABLE</span></div>
-                <nav class="main-nav">
-                    <ul class="nav-list">
-                        <li><a href="#about" class="active">/PROFILE</a></li>
-                        <li><a href="#skills">/STACK</a></li>
-                        <li><a href="#experience">/ACTIVITY</a></li>
-                        <li><a href="#projects">/REPO</a></li>
-                    </ul>
-                </nav>
-                <div class="header-actions">
-                    <button id="terminal-trigger" class="btn btn-primary">
-                        <i class="ph ph-terminal-window"></i> TERMINAL.EXE
-                    </button>
-                </div>
-            </div>
+      <div class="container container-wide">
+        <div class="header-inner">
+          <div class="logo">
+            HASAN<span class="dot">.</span>
+            <span class="sys-version">v3.5_STABLE</span>
+          </div>
+          <nav class="main-nav">
+            <ul class="nav-list">
+              <li><a href="#about" class="active">/PROFILE</a></li>
+              <li><a href="#skills">/STACK</a></li>
+              <li><a href="#experience">/ACTIVITY</a></li>
+              <li><a href="#projects">/REPO</a></li>
+            </ul>
+          </nav>
+          <div class="header-actions">
+            <button id="terminal-trigger" class="btn btn-primary">
+              <i class="ph ph-terminal-window"></i> TERMINAL.EXE
+            </button>
+          </div>
         </div>
+      </div>
     </header>
 
     <main class="main-content">
-        <!-- Hero Section: Glitch & Diagnostics -->
-        <section id="about" class="hero-section">
-            <div class="container hero-grid">
-                <div class="hero-content">
-                    <div class="badge fade-in"><span class="pulse-mini"></span> MASTER_OPERATOR_ONLINE</div>
-                    
-                    <h1 class="glitch-container fade-in">
-                        <span class="glitch" data-text="HASAN">HASAN</span> 
-                        <span class="glitch" data-text="ÇİÇEK">ÇİÇEK</span>
-                    </h1>
-
-                    <p class="hero-summary fade-in">
-                        Full-stack <strong>Systems Architect</strong> and Specialist in <strong>FreeBSD Mastery</strong>. 
-                        Engineering high-density infrastructure with custom Bash/Node.js orcherstration, 
-                        deep-packet filtering, and microservice architectures for ultra-scalable production nodes.
-                    </p>
-
-                    <div class="hero-metrics fade-in">
-                        <div class="metric">
-                            <span class="m-label">NETWORK_THROUGHPUT</span>
-                            <div class="m-bar"><div class="m-fill" style="width: 90%"></div></div>
-                            <span class="m-val">2.8 Gbps / 35,000 CONC</span>
-                        </div>
-                        <div class="metric">
-                            <span class="m-label">KERNEL_STABILITY</span>
-                            <div class="m-bar"><div class="m-fill" style="width: 99.98%"></div></div>
-                            <span class="m-val">99.98% UPTIME (2xx DAYS)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Node Diagnostics Panel -->
-                <div class="hero-diagnostics reveal">
-                    <div class="diag-card">
-                        <div class="diag-header">
-                            <i class="ph ph-cpu"></i> <span>OS_ACTIVE_NODE: HASAN_SRV_PROD</span>
-                        </div>
-                        <div class="diag-body">
-                            <div class="diag-line"><span class="lbl">KERNEL:</span> <span class="val">FreeBSD 14.3 (MASTER)</span></div>
-                            <div class="diag-line"><span class="lbl">JAILS_ACTIVE:</span> <span class="val">14 NODES RUNNING</span></div>
-                            <div class="diag-line"><span class="lbl">PF_STATUS:</span> <span class="val">ACTIVE (SNAT/BINAT_LOADED)</span></div>
-                            <div class="diag-line"><span class="lbl">MEM_LOAD:</span> <div class="mini-bar"><div style="width: 28%"></div></div></div>
-                        </div>
-                        <div class="diag-footer">
-                            <span class="blink">●</span> HASAN@SHELL: LISTENING FOR TRAFFIC...
-                        </div>
-                    </div>
-                </div>
+      <!-- Hero Section: Glitch & Diagnostics -->
+      <section id="about" class="hero-section">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <div class="badge fade-in">
+              <span class="pulse-mini"></span> MASTER_OPERATOR_ONLINE
             </div>
-        </section>
 
-        <!-- Stats Ribbon -->
-        <section class="stats-ribbon">
-            <div class="container container-wide">
-                <div class="ribbon-grid">
-                    <a href="https://github.com/cicekhasann" target="_blank" class="ribbon-item">
-                        <i class="ph ph-github-logo"></i> <span>github/cicekhasann</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/cicekhasan/" target="_blank" class="ribbon-item">
-                        <i class="ph ph-linkedin-logo"></i> <span>linkedin/cicekhasan</span>
-                    </a>
-                    <div class="ribbon-item">
-                        <i class="ph ph-envelope-simple"></i> <span>contact@hasancicek.com</span>
-                    </div>
-                    <div class="ribbon-item">
-                        <i class="ph ph-globe"></i> <span>ZONE: GLOBAL_ZONE_A</span>
-                    </div>
+            <h1 class="glitch-container fade-in">
+              <span class="glitch" data-text="HASAN">HASAN</span>
+              <span class="glitch" data-text="ÇİÇEK">ÇİÇEK</span>
+            </h1>
+
+            <p class="hero-summary fade-in">
+              Full-stack <strong>Systems Architect</strong> and Specialist in
+              <strong>FreeBSD Mastery</strong>. Engineering high-density
+              infrastructure with custom Bash/Node.js orcherstration,
+              deep-packet filtering, and microservice architectures for
+              ultra-scalable production nodes.
+            </p>
+
+            <div class="hero-metrics fade-in">
+              <div class="metric">
+                <span class="m-label">NETWORK_THROUGHPUT</span>
+                <div class="m-bar">
+                  <div class="m-fill" style="width: 90%"></div>
                 </div>
+                <span class="m-val">2.8 Gbps / 35,000 CONC</span>
+              </div>
+              <div class="metric">
+                <span class="m-label">KERNEL_STABILITY</span>
+                <div class="m-bar">
+                  <div class="m-fill" style="width: 99.98%"></div>
+                </div>
+                <span class="m-val">99.98% UPTIME (2xx DAYS)</span>
+              </div>
             </div>
-        </section>
+          </div>
 
-        <!-- High-Density Skills Matrix -->
-        <section id="skills" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">The Technical Repertoire</h2>
-                    <p class="section-subtitle">Deep systems architecture across the kernel, network, and application layers.</p>
+          <!-- Node Diagnostics Panel -->
+          <div class="hero-diagnostics reveal">
+            <div class="diag-card">
+              <div class="diag-header">
+                <i class="ph ph-cpu"></i>
+                <span>OS_ACTIVE_NODE: HASAN_SRV_PROD</span>
+              </div>
+              <div class="diag-body">
+                <div class="diag-line">
+                  <span class="lbl">KERNEL:</span>
+                  <span class="val">FreeBSD 14.3 (MASTER)</span>
                 </div>
-                
-                <div class="grid grid-4">
-                    <!-- Pillar 1: Kernel & Net -->
-                    <div class="glass-card">
-                        <div class="card-icon blue"><i class="ph ph-globe"></i></div>
-                        <h3>Kernel & Network</h3>
-                        <div class="capsules">
-                            <span>FreeBSD Mastery</span><span>Jail Management</span>
-                            <span>PF (SNAT/BINAT/Rules)</span><span>OpenVPN Arch</span>
-                            <span>Traffic Analysis</span><span>Deep Packet Inspect</span>
-                            <span>tcpdump / Wireshark</span><span>IP Routing</span>
-                            <span>tcpdump / Wireshark</span><span>IP Routing</span>
-                        </div>
-                    </div>
-
-                    <!-- Pillar 2: Services & Orchestration -->
-                    <div class="glass-card">
-                        <div class="card-icon red"><i class="ph ph-shield-check"></i></div>
-                        <h3>Services & Security</h3>
-                        <div class="capsules">
-                            <span>Docker Swarm</span><span>Squid Proxy</span>
-                            <span>Snort IDS/IPS</span><span>Nginx (Adv Config)</span>
-                            <span>Kea (DHCP)</span><span>Syslog / Syslog-ng</span>
-                            <span>LimitedShell</span><span>PKI / SSL Audit</span>
-                            <span>Prometheus / Grafana</span>
-                        </div>
-                    </div>
-
-                    <!-- Pillar 3: Automation & Custom Ops -->
-                    <div class="glass-card">
-                        <div class="card-icon cyan"><i class="ph ph-terminal"></i></div>
-                        <h3>Automation & Core</h3>
-                        <div class="capsules">
-                            <span>Bash-to-Service (RC)</span><span>Source Compilations</span>
-                            <span>Python Automation</span><span>Cron Orchestration</span>
-                            <span>Microservices (Design)</span><span>Concurrency Logic</span>
-                            <span>Git / CI / CD</span><span>Vim / Tmux Ops</span>
-                        </div>
-                    </div>
-
-                    <!-- Pillar 4: The Build Stack -->
-                    <div class="glass-card">
-                        <div class="card-icon silver"><i class="ph ph-code"></i></div>
-                        <h3>The Build Stack</h3>
-                        <div class="capsules">
-                            <span>Node.js</span><span>PHP (Intermediate)</span>
-                            <span>React</span><span>Electron (Desktop)</span>
-                            <span>Redis Caching</span><span>PostgreSQL</span>
-                            <span>WebSocket Logic</span><span>UI/UX Performance</span>
-                        </div>
-                    </div>
+                <div class="diag-line">
+                  <span class="lbl">JAILS_ACTIVE:</span>
+                  <span class="val">14 NODES RUNNING</span>
                 </div>
+                <div class="diag-line">
+                  <span class="lbl">PF_STATUS:</span>
+                  <span class="val">ACTIVE (SNAT/BINAT_LOADED)</span>
+                </div>
+                <div class="diag-line">
+                  <span class="lbl">MEM_LOAD:</span>
+                  <div class="mini-bar"><div style="width: 28%"></div></div>
+                </div>
+              </div>
+              <div class="diag-footer">
+                <span class="blink">●</span> HASAN@SHELL: LISTENING FOR
+                TRAFFIC...
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <!-- Experience Feed -->
-        <section id="experience" class="section alt-bg">
-            <div class="container container-narrow">
-                <div class="section-header center">
-                    <h2 class="section-title">Deployment Activity Stream</h2>
-                </div>
-
-                <div class="timeline">
-                    <!-- Current Role -->
-                    <div class="timeline-item reveal">
-                        <div class="t-date">Jun 2024 - PRESENT</div>
-                        <div class="t-content">
-                            <h3>Backend & Systems Engineer</h3>
-                            <div class="t-company">ePati Cyber Security</div>
-                            <ul class="t-list">
-                                <li><strong>FreeBSD Mastery:</strong> Managing 14+ Jails and orchestrating specialized kernel-level networking with PF (NAT, SNAT, BINAT).</li>
-                                <li><strong>Service Engineering:</strong> Transforming custom automation scripts into robust FreeBSD Services (rc scripts) from scratch.</li>
-                                <li><strong>Security Ops:</strong> Deployed and tuned high-load Snort IDS, Squid Proxy, and Kea DHCP implementations.</li>
-                                <li><strong>Performance:</strong> Integrated <strong>Redis</strong> and custom C++ logic to manage 30k+ concurrent client VPN packets.</li>
-                                <li><strong>App Stack:</strong> Developed internal diagnostic tools using <strong>Electron</strong> and <strong>Node.js</strong> microservices.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Previous Role -->
-                    <div class="timeline-item reveal">
-                        <div class="t-date">Feb 2024 - Jun 2024</div>
-                        <div class="t-content">
-                            <h3>Software Engineering Intern</h3>
-                            <div class="t-company">ePati Cyber Security</div>
-                            <ul class="t-list">
-                                <li>Developed web-based system management portlets using **PHP** and **React**.</li>
-                                <li>Created custom Bash scripts for automated versioning and source compilation.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+      <!-- Stats Ribbon -->
+      <section class="stats-ribbon">
+        <div class="container container-wide">
+          <div class="ribbon-grid">
+            <a
+              href="https://github.com/cicekhasann"
+              target="_blank"
+              class="ribbon-item"
+            >
+              <i class="ph ph-github-logo"></i> <span>github/cicekhasann</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/cicekhasan/"
+              target="_blank"
+              class="ribbon-item"
+            >
+              <i class="ph ph-linkedin-logo"></i>
+              <span>linkedin/cicekhasan</span>
+            </a>
+            <div class="ribbon-item">
+              <i class="ph ph-envelope-simple"></i>
+              <span>contact@hasancicek.com</span>
             </div>
-        </section>
-
-        <!-- Projects Dashboard -->
-        <section id="projects" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Architecture Artifacts</h2>
-                </div>
-
-                <div class="grid grid-3">
-                    <div class="project-box">
-                        <div class="p-header">
-                            <span class="p-status">KERNEL</span>
-                            <h3>VPN_JAIL_SIM</h3>
-                        </div>
-                        <p>Simulating 35k client nodes within FreeBSD Jails with custom PF routing rules for stress testing.</p>
-                        <div class="p-footer">#FreeBSD #PF #Jails</div>
-                    </div>
-                    <div class="project-box">
-                        <div class="p-header">
-                            <span class="p-status">ENGINE</span>
-                            <h3>BASH_RC_AUTOMATOR</h3>
-                        </div>
-                        <p>Framework to automatically convert standalone Bash logic into production-ready FreeBSD services.</p>
-                        <div class="p-footer">#Automation #Bash #RC</div>
-                    </div>
-                    <div class="project-box">
-                        <div class="p-header">
-                            <span class="p-status">CLIENT</span>
-                            <h3>NODE_MONITOR_APP</h3>
-                        </div>
-                        <p>Cross-platform desktop application built with Electron for real-time monitoring of server logs and traffic.</p>
-                        <div class="p-footer">#Electron #NodeJS #Systems</div>
-                    </div>
-                </div>
+            <div class="ribbon-item">
+              <i class="ph ph-globe"></i> <span>ZONE: GLOBAL_ZONE_A</span>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- High-Density Skills Matrix -->
+      <section id="skills" class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">The Technical Repertoire</h2>
+            <p class="section-subtitle">
+              Deep systems architecture across the kernel, network, and
+              application layers.
+            </p>
+          </div>
+
+          <div class="grid grid-4">
+            <!-- Pillar 1: Kernel & Net -->
+            <div class="glass-card">
+              <div class="card-icon blue"><i class="ph ph-globe"></i></div>
+              <h3>Kernel & Network</h3>
+              <div class="capsules">
+                <span>FreeBSD Mastery</span><span>Jail Management</span>
+                <span>PF (SNAT/BINAT/Rules)</span><span>OpenVPN Arch</span>
+                <span>Traffic Analysis</span><span>Deep Packet Inspect</span>
+                <span>tcpdump / Wireshark</span><span>IP Routing</span>
+                <span>tcpdump / Wireshark</span><span>IP Routing</span>
+              </div>
+            </div>
+
+            <!-- Pillar 2: Services & Orchestration -->
+            <div class="glass-card">
+              <div class="card-icon red">
+                <i class="ph ph-shield-check"></i>
+              </div>
+              <h3>Services & Security</h3>
+              <div class="capsules">
+                <span>Docker Swarm</span><span>Squid Proxy</span>
+                <span>Snort IDS/IPS</span><span>Nginx (Adv Config)</span>
+                <span>Kea (DHCP)</span><span>Syslog / Syslog-ng</span>
+                <span>LimitedShell</span><span>PKI / SSL Audit</span>
+                <span>Prometheus / Grafana</span>
+              </div>
+            </div>
+
+            <!-- Pillar 3: Automation & Custom Ops -->
+            <div class="glass-card">
+              <div class="card-icon cyan"><i class="ph ph-terminal"></i></div>
+              <h3>Automation & Core</h3>
+              <div class="capsules">
+                <span>Bash-to-Service (RC)</span
+                ><span>Source Compilations</span> <span>Python Automation</span
+                ><span>Cron Orchestration</span>
+                <span>Microservices (Design)</span
+                ><span>Concurrency Logic</span> <span>Git / CI / CD</span
+                ><span>Vim / Tmux Ops</span>
+              </div>
+            </div>
+
+            <!-- Pillar 4: The Build Stack -->
+            <div class="glass-card">
+              <div class="card-icon silver"><i class="ph ph-code"></i></div>
+              <h3>The Build Stack</h3>
+              <div class="capsules">
+                <span>Node.js</span><span>PHP (Intermediate)</span>
+                <span>React</span><span>Electron (Desktop)</span>
+                <span>Redis Caching</span><span>PostgreSQL</span>
+                <span>WebSocket Logic</span><span>UI/UX Performance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience Feed -->
+      <section id="experience" class="section alt-bg">
+        <div class="container container-narrow">
+          <div class="section-header center">
+            <h2 class="section-title">Deployment Activity Stream</h2>
+          </div>
+
+          <div class="timeline">
+            <!-- Current Role -->
+            <div class="timeline-item reveal">
+              <div class="t-date">Jun 2024 - PRESENT</div>
+              <div class="t-content">
+                <h3>Backend & Systems Engineer</h3>
+                <div class="t-company">ePati Cyber Security</div>
+                <ul class="t-list">
+                  <li>
+                    <strong>FreeBSD Mastery:</strong> Managing 14+ Jails and
+                    orchestrating specialized kernel-level networking with PF
+                    (NAT, SNAT, BINAT).
+                  </li>
+                  <li>
+                    <strong>Service Engineering:</strong> Transforming custom
+                    automation scripts into robust FreeBSD Services (rc scripts)
+                    from scratch.
+                  </li>
+                  <li>
+                    <strong>Security Ops:</strong> Deployed and tuned high-load
+                    Snort IDS, Squid Proxy, and Kea DHCP implementations.
+                  </li>
+                  <li>
+                    <strong>Performance:</strong> Integrated
+                    <strong>Redis</strong> and custom C++ logic to manage 30k+
+                    concurrent client VPN packets.
+                  </li>
+                  <li>
+                    <strong>App Stack:</strong> Developed internal diagnostic
+                    tools using <strong>Electron</strong> and
+                    <strong>Node.js</strong> microservices.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Previous Role -->
+            <div class="timeline-item reveal">
+              <div class="t-date">Feb 2024 - Jun 2024</div>
+              <div class="t-content">
+                <h3>Software Engineering Intern</h3>
+                <div class="t-company">ePati Cyber Security</div>
+                <ul class="t-list">
+                  <li>
+                    Developed web-based system management portlets using **PHP**
+                    and **React**.
+                  </li>
+                  <li>
+                    Created custom Bash scripts for automated versioning and
+                    source compilation.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Dashboard -->
+      <section id="projects" class="section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Architecture Artifacts</h2>
+          </div>
+
+          <div class="grid grid-3">
+            <div class="project-box">
+              <div class="p-header">
+                <span class="p-status">KERNEL</span>
+                <h3>VPN_JAIL_SIM</h3>
+              </div>
+              <p>
+                Simulating 35k client nodes within FreeBSD Jails with custom PF
+                routing rules for stress testing.
+              </p>
+              <div class="p-footer">#FreeBSD #PF #Jails</div>
+            </div>
+            <div class="project-box">
+              <div class="p-header">
+                <span class="p-status">ENGINE</span>
+                <h3>BASH_RC_AUTOMATOR</h3>
+              </div>
+              <p>
+                Framework to automatically convert standalone Bash logic into
+                production-ready FreeBSD services.
+              </p>
+              <div class="p-footer">#Automation #Bash #RC</div>
+            </div>
+            <div class="project-box">
+              <div class="p-header">
+                <span class="p-status">CLIENT</span>
+                <h3>NODE_MONITOR_APP</h3>
+              </div>
+              <p>
+                Cross-platform desktop application built with Electron for
+                real-time monitoring of server logs and traffic.
+              </p>
+              <div class="p-footer">#Electron #NodeJS #Systems</div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="main-footer">
-        <div class="container">
-            <div class="footer-row">
-                <div class="f-copy">&copy; 2024 Hasan Çiçek. Advanced Systems Operator.</div>
-                <div class="f-status">
-                    <span class="status-pulse"></span> UPTIME: 255d 12:04:32 [SYSTEM_MASTER: ONLINE]
-                </div>
-            </div>
+      <div class="container">
+        <div class="footer-row">
+          <div class="f-copy">
+            &copy; 2024 Hasan Çiçek. Advanced Systems Operator.
+          </div>
+          <div class="f-status">
+            <span class="status-pulse"></span> UPTIME: 255d 12:04:32
+            [SYSTEM_MASTER: ONLINE]
+          </div>
         </div>
+      </div>
     </footer>
 
     <!-- Terminal Overlay -->
     <div id="terminal-overlay" class="terminal-overlay hidden">
-        <div class="terminal-window">
-            <div class="terminal-header">
-                <div class="terminal-controls">
-                    <span class="control close"></span>
-                    <span class="control minimize"></span>
-                    <span class="control maximize"></span>
-                </div>
-                <div class="terminal-title">hasan@shell: ~ (v3.5_STABLE)</div>
-            </div>
-            <div class="terminal-body" id="terminal-body">
-                <div class="terminal-output" id="terminal-output">
-                    <div class="line">Welcome to Hasan's Private Shell. Type <span class="cmd">'?'</span> or <span class="cmd">'help'</span> for available commands.</div>
-                </div>
-                <div class="terminal-prompt-line">
-                    <span class="prompt">hasan@shell:~$</span>
-                    <input type="text" id="terminal-input" autofocus autocomplete="off" spellcheck="false">
-                </div>
-            </div>
-            <div class="game-container hidden" id="game-container">
-                <canvas id="game-canvas"></canvas>
-                <div class="game-overlay" id="game-overlay">
-                    <div class="game-msg">PRESS SPACE TO START</div>
-                    <div class="game-score">SCORE: 0</div>
-                </div>
-                <div class="game-controls">Press 'ESC' to exit game</div>
-            </div>
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <div class="terminal-controls">
+            <span class="control close"></span>
+            <span class="control minimize"></span>
+            <span class="control maximize"></span>
+          </div>
+          <div class="terminal-title">hasan@shell: ~ (v5.6_EVO)</div>
         </div>
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-output" id="terminal-output"></div>
+          <div class="terminal-prompt-line">
+            <span class="prompt">hasan@shell:~$</span>
+            <input
+              type="text"
+              id="terminal-input"
+              autofocus
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
+        </div>
+            <div id="game-container" class="game-container hidden">
+                <div class="game-main">
+                    <canvas id="game-canvas"></canvas>
+                    <div id="game-overlay" class="game-overlay hidden">
+                        <div class="game-msg-big">SPACE TO START</div>
+                        <div class="game-controls">Press 'ESC' to exit</div>
+                    </div>
+                </div>
+                <div class="game-sidebar">
+                    <div class="game-stats-box">
+                        <div class="stat-label">Operator</div>
+                        <div id="game-stat-user" class="stat-value">GUEST</div>
+                    </div>
+                    <div class="game-stats-box">
+                        <div class="stat-label">Current Score</div>
+                        <div id="game-stat-score" class="stat-value">0</div>
+                    </div>
+                    <div class="game-stats-box">
+                        <div class="stat-label">High Score</div>
+                        <div id="game-stat-best" class="stat-value">0</div>
+                    </div>
+                    <div class="game-stats-box" id="level-box">
+                        <div class="stat-label">System Level</div>
+                        <div id="game-stat-level" class="stat-value">1</div>
+                    </div>
+                    <div class="game-legend-box">
+                        <div class="legend-item"><div class="legend-dot" style="background:#22c55e;"></div> Packet (+10)</div>
+                        <div class="legend-item"><div class="legend-dot" style="background:#f43f5e;"></div> Virus (Crash)</div>
+                        <div class="legend-item"><div class="legend-dot" style="background:#38bdf8;"></div> Firewall (Slow)</div>
+                        <div class="legend-item"><div class="legend-dot" style="background:#fbbf24;"></div> Kernel (Shield)</div>
+                    </div>
+                </div>
+            </div>
+      </div>
     </div>
 
     <script src="terminal.js"></script>
     <script>
-        // Smooth reveal on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
+      // Smooth reveal on scroll
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
 
-        document.querySelectorAll('.reveal, .fade-in').forEach((el) => observer.observe(el));
+      document
+        .querySelectorAll(".reveal, .fade-in")
+        .forEach((el) => observer.observe(el));
     </script>
-</body>
-
+  </body>
 </html>

@@ -213,17 +213,21 @@ body.theme-matrix #matrix-canvas { opacity: 0.15; }
 .terminal-header {
     background: rgba(255, 255, 255, 0.05);
     padding: 0.8rem 1.2rem;
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center;
     border-bottom: 1px solid var(--color-border);
 }
 
-.terminal-controls { display: flex; gap: 0.6rem; order: 2; }
-.control { width: 12px; height: 12px; border-radius: 50%; display: inline-block; cursor: pointer; }
-.control.minimize { background: #ffbd2e; }
-.control.maximize { background: #27c93f; }
-.control.close { background: #ff5f56; }
+.terminal-controls { display: flex; gap: 0.6rem; order: 1; margin-right: 1.5rem; }
+.control { 
+    width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-family: var(--font-mono); font-weight: 800; font-size: 1rem;
+    color: #ff5f56; transition: var(--transition); border-radius: 4px;
+}
+.control:hover { background: rgba(255, 95, 86, 0.2); }
+.control.close::before { content: '×'; }
+.control.minimize, .control.maximize { display: none; }
 
-.terminal-title { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-dim); order: 1; }
+.terminal-title { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-dim); order: 2; }
 
 .terminal-body {
     flex-grow: 1; padding: 1.5rem;
@@ -248,17 +252,63 @@ body.theme-matrix #matrix-canvas { opacity: 0.15; }
     width: 100%;
 }
 
-/* Game Styles */
+/* --- Modern Dashboard Game UI --- */
 .game-container {
-    position: absolute; top: 40px; left: 0; width: 100%; height: calc(100% - 40px);
-    background: #000; z-index: 10;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: #050505; z-index: 100;
+    display: flex; flex-direction: row; align-items: stretch; justify-content: space-between;
+    font-family: var(--font-mono);
 }
-#game-canvas { border: 2px solid var(--color-border); image-rendering: pixelated; max-width: 90%; max-height: 70%; }
-.game-overlay { position: absolute; text-align: center; pointer-events: none; }
-.game-msg { font-family: var(--font-mono); color: var(--color-primary); font-size: 1.5rem; margin-bottom: 1rem; text-shadow: 0 0 10px var(--color-primary); }
-.game-score { font-family: var(--font-mono); color: #fff; font-size: 1rem; }
-.game-controls { margin-top: 1rem; font-size: 0.7rem; color: var(--color-text-dim); font-family: var(--font-mono); }
+
+.game-main {
+    flex: 1; position: relative;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: radial-gradient(circle, #0a0a0a 0%, #000 100%);
+    border-right: 1px solid #222;
+}
+
+#game-canvas { 
+    border: 1px solid var(--color-primary-dim); 
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    image-rendering: pixelated; 
+    max-width: 95%; max-height: 85%; 
+}
+
+.game-sidebar {
+    width: 240px; background: rgba(10, 10, 10, 0.95);
+    padding: 20px; display: flex; flex-direction: column; gap: 20px;
+    border-left: 1px solid #222;
+}
+
+.game-stats-box {
+    padding: 12px; background: rgba(255,255,255,0.02);
+    border-radius: 4px; border-left: 3px solid var(--color-primary);
+}
+
+.stat-label { font-size: 0.6rem; color: var(--color-text-dim); text-transform: uppercase; margin-bottom: 3px; }
+.stat-value { font-size: 1.1rem; color: #fff; font-weight: 700; text-shadow: 0 0 10px var(--color-primary-glow); }
+
+.game-legend-box {
+    margin-top: auto; display: flex; flex-direction: column; gap: 10px;
+    font-size: 0.75rem; color: var(--color-text-dim);
+    padding: 10px; background: rgba(255,255,255,0.01); border-radius: 4px;
+}
+
+.legend-item { display: flex; align-items: center; gap: 10px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.game-overlay { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 110; text-align: center;
+}
+
+.game-msg-big { font-size: 1.8rem; font-weight: 800; color: var(--color-primary); margin-bottom: 0.5rem; text-shadow: 0 0 20px var(--color-primary); }
+.game-controls { margin-top: 1.5rem; font-size: 0.7rem; color: var(--color-text-dim); }
+
+@keyframes levelUpFlash { 0% { background: var(--color-primary-glow); } 100% { background: transparent; } }
+.level-up-anim { animation: levelUpFlash 0.6s ease-out; }
 
 /* --- Themes --- */
 body.theme-matrix {
