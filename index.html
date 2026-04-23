@@ -181,7 +181,6 @@
                 <span>PF (SNAT/BINAT/Rules)</span><span>OpenVPN Arch</span>
                 <span>Traffic Analysis</span><span>Deep Packet Inspect</span>
                 <span>tcpdump / Wireshark</span><span>IP Routing</span>
-                <span>tcpdump / Wireshark</span><span>IP Routing</span>
               </div>
             </div>
 
@@ -378,51 +377,105 @@
             />
           </div>
         </div>
-            <div id="game-container" class="game-container hidden">
-                <div class="game-main">
-                    <canvas id="game-canvas"></canvas>
-                    <div id="game-overlay" class="game-overlay hidden">
-                        <div class="game-msg-big">SPACE TO START</div>
-                        <div id="mode-selection" style="display:none; margin: 15px 0;">
-                            <button onclick="setHockeyMode(false)" class="mode-btn active">Solo (vs CPU)</button>
-                            <button onclick="setHockeyMode(true)" class="mode-btn">Multi (Local)</button>
-                        </div>
-                        <div id="p2-name-box" style="display:none; margin: 10px 0;">
-                            P2 NAME: <input type="text" id="p2-name-input" value="CPU_ORCHESTRATOR" style="background:rgba(0,0,0,0.5); border:1px solid var(--color-primary); color:var(--color-primary); font-family:var(--font-mono); font-size:0.8rem; padding:4px; width:120px; outline:none; text-align:center;">
-                        </div>
-                        <div class="game-controls">Press 'SPACE' to commence</div>
-                        <div class="game-controls" style="opacity:0.6; font-size:0.7rem; margin-top:5px;">Press 'ESC' to exit</div>
-                    </div>
-                </div>
-                <div class="game-sidebar">
-                    <div class="game-stats-box">
-                        <div class="stat-label">Operator</div>
-                        <div id="game-stat-user" class="stat-value">GUEST</div>
-                    </div>
-                    <div class="game-stats-box">
-                        <div class="stat-label">Current Score</div>
-                        <div id="game-stat-score" class="stat-value">0</div>
-                    </div>
-                    <div class="game-stats-box">
-                        <div class="stat-label">High Score</div>
-                        <div id="game-stat-best" class="stat-value">0</div>
-                    </div>
-                    <div class="game-stats-box" id="level-box">
-                        <div class="stat-label">System Level</div>
-                        <div id="game-stat-level" class="stat-value">1</div>
-                    </div>
-                    <button id="game-logout-btn" style="margin-top:10px; background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.3); color:#f43f5e; padding:8px; border-radius:4px; cursor:pointer; font-family:var(--font-mono); font-size:0.7rem; transition:0.3s;">
-                        LOGOUT OPERATOR
-                    </button>
-                    <div class="game-legend-box">
-                        <div class="legend-item"><div class="legend-dot" style="background:#22c55e;"></div> Packet (+10)</div>
-                        <div class="legend-item"><div class="legend-dot" style="background:#ff79c6;"></div> Vaccine (Clear)</div>
-                        <div class="legend-item"><div class="legend-dot" style="background:#f43f5e;"></div> Virus (Crash)</div>
-                        <div class="legend-item"><div class="legend-dot" style="background:#38bdf8;"></div> Firewall (Slow)</div>
-                        <div class="legend-item"><div class="legend-dot" style="background:#fbbf24;"></div> Kernel (Shield)</div>
-                    </div>
-                </div>
+        <div id="game-container" class="game-container hidden">
+          <div class="game-main">
+            <canvas id="game-canvas"></canvas>
+            <div id="game-overlay" class="game-overlay hidden">
+              <div class="game-msg-big">SPACE TO START</div>
+              <div id="mode-selection" style="display: none; margin: 15px 0">
+                <button onclick="setHockeyMode(false)" class="mode-btn active">
+                  Solo (vs CPU)
+                </button>
+                <button onclick="setHockeyMode(true)" class="mode-btn">
+                  Multi (Local)
+                </button>
+              </div>
+              <div id="p2-name-box" style="display: none; margin: 10px 0">
+                P2 NAME:
+                <input
+                  type="text"
+                  id="p2-name-input"
+                  value="CPU_ORCHESTRATOR"
+                  style="
+                    background: rgba(0, 0, 0, 0.5);
+                    border: 1px solid var(--color-primary);
+                    color: var(--color-primary);
+                    font-family: var(--font-mono);
+                    font-size: 0.8rem;
+                    padding: 4px;
+                    width: 120px;
+                    outline: none;
+                    text-align: center;
+                  "
+                />
+              </div>
+              <div class="game-controls">Press 'SPACE' to commence</div>
+              <div
+                class="game-controls"
+                style="opacity: 0.6; font-size: 0.7rem; margin-top: 5px"
+              >
+                Press 'ESC' to exit
+              </div>
             </div>
+          </div>
+          <div class="game-sidebar">
+            <div class="game-stats-box">
+              <div class="stat-label">Operator</div>
+              <div id="game-stat-user" class="stat-value">GUEST</div>
+            </div>
+            <div class="game-stats-box">
+              <div class="stat-label">Current Score</div>
+              <div id="game-stat-score" class="stat-value">0</div>
+            </div>
+            <div class="game-stats-box">
+              <div class="stat-label">High Score</div>
+              <div id="game-stat-best" class="stat-value">0</div>
+            </div>
+            <div class="game-stats-box" id="level-box">
+              <div class="stat-label">System Level</div>
+              <div id="game-stat-level" class="stat-value">1</div>
+            </div>
+            <button
+              id="game-logout-btn"
+              style="
+                margin-top: 10px;
+                background: rgba(244, 63, 94, 0.1);
+                border: 1px solid rgba(244, 63, 94, 0.3);
+                color: #f43f5e;
+                padding: 8px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-family: var(--font-mono);
+                font-size: 0.7rem;
+                transition: 0.3s;
+              "
+            >
+              LOGOUT OPERATOR
+            </button>
+            <div class="game-legend-box">
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #22c55e"></div>
+                Packet (+10)
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #ff79c6"></div>
+                Vaccine (Clear)
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #f43f5e"></div>
+                Virus (Crash)
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #38bdf8"></div>
+                Firewall (Slow)
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: #fbbf24"></div>
+                Kernel (Shield)
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
