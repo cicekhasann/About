@@ -383,7 +383,15 @@
                     <canvas id="game-canvas"></canvas>
                     <div id="game-overlay" class="game-overlay hidden">
                         <div class="game-msg-big">SPACE TO START</div>
-                        <div class="game-controls">Press 'ESC' to exit</div>
+                        <div id="mode-selection" style="display:none; margin: 15px 0;">
+                            <button onclick="setHockeyMode(false)" class="mode-btn active">Solo (vs CPU)</button>
+                            <button onclick="setHockeyMode(true)" class="mode-btn">Multi (Local)</button>
+                        </div>
+                        <div id="p2-name-box" style="display:none; margin: 10px 0;">
+                            P2 NAME: <input type="text" id="p2-name-input" value="CPU_ORCHESTRATOR" style="background:rgba(0,0,0,0.5); border:1px solid var(--color-primary); color:var(--color-primary); font-family:var(--font-mono); font-size:0.8rem; padding:4px; width:120px; outline:none; text-align:center;">
+                        </div>
+                        <div class="game-controls">Press 'SPACE' to commence</div>
+                        <div class="game-controls" style="opacity:0.6; font-size:0.7rem; margin-top:5px;">Press 'ESC' to exit</div>
                     </div>
                 </div>
                 <div class="game-sidebar">

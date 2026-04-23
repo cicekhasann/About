@@ -62,9 +62,9 @@ function initTerminal() {
     `;
 
     const virtualFiles = {
-        'about.txt': "Systems & Software Engineer specializing in FreeBSD, Network Orchestration, and High-Concurrency systems. Operator of the Hasan_Prod node.",
-        'skills.md': "Core: FreeBSD, Bash, Python, Node.js\nNetwork: Snort, Squid, PF Firewall, Redis\nHigh-Level: React, Electron, Microservices",
-        'contact.env': "Email: hasan@operator.grid\nLocation: Istanbul Grid Node\nStatus: Available for complex orchestration."
+        'about.txt': "Advanced Systems & Software Engineer (FreeBSD Mastery). Expert in high-performance network orchestration, kernel tuning, and automation. Key achievement: Managed 35,000+ concurrent VPN clients with 2.8 Gbps throughput. Experienced in microservices architecture, FreeBSD Jails orchestration, and multi-platform desktop engineering (Electron).",
+        'skills.md': "Kernel/Network: FreeBSD Kernel Tuning, Jails, PF Firewall (NAT/SNAT/BINAT), OpenVPN, Snort, Squid\nAutomation: Bash-to-Service Automation (rc scripts), Node.js, Python, advanced scripting\nFrontend/Desktop: React, Electron, modern ES6+ JS\nSecurity: Snort, PKI management, SSL/TLS auditing, PAM (Zetaccess)\nData/Cache: Redis, PostgreSQL, SQLite",
+        'contact.env': "Email: hasancicek@operator.grid\nLinkedIn: linkedin.com/in/hasancicek\nGitHub: github.com/cicekhasann\nStatus: Available for complex systems architecture and orchestration."
     };
 
     const commands = {
@@ -89,10 +89,12 @@ function initTerminal() {
         'skills': () => {
             printLine("TECHNICAL REPERTOIRE:", "cmd");
             printLine("----------------------");
-            printLine("[ ] FREEBSD KERNEL TUNING");
-            printLine("[ ] NETWORK ORCHESTRATION");
-            printLine("[ ] BASH-TO-SERVICE AUTOMATION");
-            printLine("[ ] MICROSERVICES ARCHITECTURE");
+            printLine("[+] FREEBSD KERNEL & JAILS MASTERY");
+            printLine("[+] HIGH-PERFORMANCE VPN ARCHITECTURE");
+            printLine("[+] BASH-TO-SERVICE AUTOMATION (RC SCRIPTS)");
+            printLine("[+] ELECTRON DESKTOP ORCHESTRATION");
+            printLine("[+] DOCKER SWARM & MICROSERVICES");
+            printLine("[+] NETWORK SECURITY (PF, SNORT, SQUID)");
         },
         'socials': () => {
             printLine("GRID CONNECTIONS:", "cmd");
@@ -100,15 +102,21 @@ function initTerminal() {
             printLine("  LinkedIn : linkedin.com/in/hasancicek");
         },
         'repos': () => {
-            printLine("FETCHING REPOSITORY DATA...", "cmd");
+            printLine("FETCHING ACTIVE GRID REPOSITORIES...", "cmd");
             const projects = [
-                { name: "LivePcap-Analyzer", desc: "High-performance packet analysis engine.", stars: 42 },
-                { name: "Antikor-OS", desc: "FreeBSD based network security distribution.", stars: 128 },
-                { name: "Electron-Kesim-Plani", desc: "Professional furniture cutting optimization.", stars: 15 },
-                { name: "Portfolio-v5", desc: "The terminal you are currently using.", stars: 99 }
+                { name: "azkaban-cybersecurity", desc: "Enterprise cybersecurity platform with professional terminal UI.", stars: 124 },
+                { name: "kesim-app", desc: "Professional furniture cutting optimization & industrial logic (Electron).", stars: 22 },
+                { name: "Pano_V5", desc: "Advanced industrial panel control and management system (C++).", stars: 45 },
+                { name: "smtp-proccessing", desc: "High-throughput Java-based SMTP management and processing engine.", stars: 31 },
+                { name: "paperclip", desc: "Open-source orchestration for zero-human company automation.", stars: 92 },
+                { name: "ControlHub", desc: "Centralized node management and infrastructure orchestration platform.", stars: 18 },
+                { name: "openvpn_servercon", desc: "Automated high-concurrency OpenVPN server configuration API.", stars: 56 },
+                { name: "getcountbyos", desc: "OS-based analytical data collection and reporting system.", stars: 12 },
+                { name: "BreastCancerTRY", desc: "Machine learning based cancer prediction and research module.", stars: 8 },
+                { name: "About", desc: "Professional Systems Operator portfolio (Current Grid Node).", stars: 99 }
             ];
             projects.forEach(p => {
-                printLine(`>> ${p.name.padEnd(25)} [STARS: ${p.stars}]`);
+                printLine(`>> ${p.name.padEnd(25)} [TYPE: PROJECT]`);
                 printLine(`   DESC: ${p.desc}`, "success");
             });
         },
@@ -306,8 +314,8 @@ function initTerminal() {
 
     // Air Hockey State
     let pucks = [];
-    let p1 = { x: 180, y: 450, w: 60, h: 15, score: 0 };
-    let p2 = { x: 180, y: 50, w: 60, h: 15, score: 0 };
+    let p1 = { x: 180, y: 450, w: 60, h: 15, score: 0, px: 180, py: 450 };
+    let p2 = { x: 180, y: 50, w: 60, h: 15, score: 0, px: 180, py: 50 };
     let pucksPlayed = 0;
     let isMultiplayer = false;
     let chaosTimer = 0;
@@ -332,6 +340,8 @@ function initTerminal() {
         document.getElementById('game-stat-level').innerText = '1';
 
         document.getElementById('game-overlay').classList.remove('hidden');
+        const legend = document.querySelector('.game-legend-box');
+        if (legend) legend.style.display = 'block';
         
         gameMode = 'pixel';
         gameLoop = requestAnimationFrame(gameUpdateLoop);
@@ -360,6 +370,8 @@ function initTerminal() {
         document.getElementById('game-stat-level').innerText = '1';
 
         document.getElementById('game-overlay').classList.remove('hidden');
+        const legend = document.querySelector('.game-legend-box');
+        if (legend) legend.style.display = 'none';
         
         gameMode = 'brick';
         lastTime = performance.now();
@@ -371,10 +383,11 @@ function initTerminal() {
         isGameRunning = true; isGamePaused = true;
         gameScore = 0; gameLevel = 1; chaosTimer = 0; pucksPlayed = 0;
         isMultiplayer = multi;
+        showOverlay("AIR HOCKEY MODULE", true);
         gCanvas.width = 400; gCanvas.height = 500;
         
-        p1 = { x: 200, y: 460, w: 60, h: 15, score: 0, name: currentUser || 'GUEST' };
-        p2 = { x: 200, y: 40, w: 60, h: 15, score: 0, name: p2Name };
+        p1 = { x: 200, y: 460, w: 60, h: 15, score: 0, name: currentUser || 'GUEST', px: 200, py: 460 };
+        p2 = { x: 200, y: 40, w: 60, h: 15, score: 0, name: p2Name, px: 200, py: 40 };
         pucks = [{ x: 200, y: 250, dx: 0, dy: 0, r: 10 }];
         
         let hiScore = guestHighScore;
@@ -389,19 +402,10 @@ function initTerminal() {
         document.getElementById('game-stat-best').innerText = hiScore;
         document.getElementById('game-stat-level').innerText = multi ? 'PvP' : 'PvE';
 
-        const overlay = document.getElementById('game-overlay');
-        overlay.classList.remove('hidden');
-        overlay.querySelector('.game-msg-big').innerText = "HOCKEY INITIALIZED";
-        overlay.querySelector('.game-controls').innerHTML = `
-            <div style="display:flex; gap:10px; justify-content:center; margin-top:10px;">
-                <button onclick="window.setHockeyMode(false)" class="mode-btn ${!multi?'active':''}">Solo (vs CPU)</button>
-                <button onclick="window.setHockeyMode(true)" class="mode-btn ${multi?'active':''}">Multi (Local)</button>
-            </div>
-            <div id="p2-name-box" style="margin-top:10px; ${multi?'':'display:none;'}">
-                P2 NAME: <input type="text" id="p2-name-input" value="${p2Name}" style="background:rgba(0,0,0,0.5); border:1px solid var(--color-primary); color:var(--color-primary); font-family:var(--font-mono); font-size:0.8rem; padding:4px; width:120px; outline:none; text-align:center;">
-            </div>
-            <div style="margin-top:10px; font-size:0.8rem; opacity:0.8;">PRESS SPACE TO COMMENCE</div>
-        `;
+        const legend = document.querySelector('.game-legend-box');
+        if (legend) legend.style.display = 'none';
+
+        showOverlay("HOCKEY INITIALIZED", true);
 
         gameMode = 'hockey';
         lastTime = performance.now();
@@ -466,10 +470,12 @@ function initTerminal() {
 
     function stopPixelGame() { isGameRunning = false; cancelAnimationFrame(gameLoop); gameContainer.classList.add('hidden'); setTimeout(() => input.focus(), 100); }
 
-    function showOverlay(msg) {
+    function showOverlay(msg, showModes = false) {
         const overlay = document.getElementById('game-overlay');
         overlay.classList.remove('hidden');
         overlay.querySelector('.game-msg-big').innerText = msg;
+        document.getElementById('mode-selection').style.display = showModes ? 'block' : 'none';
+        document.getElementById('p2-name-box').style.display = (showModes && isMultiplayer) ? 'block' : 'none';
     }
 
     function startGame() {
@@ -629,6 +635,11 @@ function initTerminal() {
                 }
             }
         } else if (gameMode === 'hockey') {
+            // Track Paddle Velocities
+            p1.vx = (p1.x - p1.px) / dt; p1.vy = (p1.y - p1.py) / dt;
+            p2.vx = (p2.x - p2.px) / dt; p2.vy = (p2.y - p2.py) / dt;
+            p1.px = p1.x; p1.py = p1.y; p2.px = p2.x; p2.py = p2.y;
+
             // Air Hockey Physics
             const speed = 400;
             // P1 Controls (Arrows or Touch)
@@ -725,11 +736,26 @@ function initTerminal() {
                     const distance = Math.hypot(p.x - closestX, p.y - padY);
 
                     if (distance < p.r) {
-                        p.dy *= -1.25; 
-                        p.dx = ((p.x - paddle.x) / (paddle.w / 2)) * 500;
+                        // Dynamic Acceleration based on paddle speed
+                        const paddleInfluence = Math.abs(paddle.vy) * 0.3;
+                        p.dy = (p.y > gCanvas.height/2 ? -1 : 1) * (Math.abs(p.dy) * 1.15 + paddleInfluence);
+                        p.dx += paddle.vx * 0.5; // Transfer horizontal momentum
+                        
+                        // Paddle angle bounce
+                        p.dx += ((p.x - paddle.x) / (paddle.w / 2)) * 300;
+                        
                         p.y = paddle.y > gCanvas.height/2 ? paddle.y - paddle.h/2 - p.r : paddle.y + paddle.h/2 + p.r;
                     }
                 });
+
+                // Speed Cap (Prevent clipping/impossible play)
+                const MAX_SPEED = 1800;
+                const speed = Math.hypot(p.dx, p.dy);
+                if (speed > MAX_SPEED) {
+                    const ratio = MAX_SPEED / speed;
+                    p.dx *= ratio;
+                    p.dy *= ratio;
+                }
             }
 
             gameScore = p1.score * 1000;
