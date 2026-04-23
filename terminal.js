@@ -151,12 +151,27 @@ function initTerminal() {
                 printLine(`Welcome, ${currentUser}.`, "success");
             }
         },
-        'leaderboard': async () => {
-            printLine("FETCHING GLOBAL STANDINGS...", "cmd");
+        'leaderboard': async (args) => {
+            const mode = (args[0] || gameMode).toLowerCase();
+            printLine(`FETCHING ${mode.toUpperCase()} STANDINGS...`, "cmd");
             const sb = getSupabase();
             if (!sb) return;
-            const { data } = await sb.from('leaderboard').select('name, score').order('score', { ascending: false }).limit(10);
-            if (data) data.forEach((row, i) => printLine(`${(i === 0) ? "[TOP] " : `${(i+1).toString().padStart(2, '0')}. `}${row.name.padEnd(15)} - ${row.score} pts`));
+            
+            const { data, error } = await sb.from('game_scores')
+                .select('score:high_score, players(username)')
+                .eq('game_mode', mode)
+                .order('high_score', { ascending: false })
+                .limit(10);
+
+            if (error) { printLine(`Error: ${error.message}`, "error"); return; }
+            if (data) {
+                data.forEach((row, i) => {
+                    const name = row.players?.username || 'UNKNOWN';
+                    printLine(`${(i === 0) ? "[TOP] " : `${(i+1).toString().padStart(2, '0')}. `}${name.padEnd(15)} - ${row.score} pts`);
+                });
+            } else {
+                printLine("No data found for this module.", "error");
+            }
         },
         'game': (args) => {
             if (!args[0]) {
@@ -293,6 +308,7 @@ function initTerminal() {
     let pucks = [];
     let p1 = { x: 180, y: 450, w: 60, h: 15, score: 0 };
     let p2 = { x: 180, y: 50, w: 60, h: 15, score: 0 };
+    let pucksPlayed = 0;
     let isMultiplayer = false;
     let chaosTimer = 0;
 
@@ -353,7 +369,7 @@ function initTerminal() {
     async function startHockeyGame(multi = false, p2Name = 'CPU_ORCHESTRATOR') {
         gameContainer.classList.remove('hidden');
         isGameRunning = true; isGamePaused = true;
-        gameScore = 0; gameLevel = 1; chaosTimer = 0;
+        gameScore = 0; gameLevel = 1; chaosTimer = 0; pucksPlayed = 0;
         isMultiplayer = multi;
         gCanvas.width = 400; gCanvas.height = 500;
         
@@ -403,14 +419,17 @@ function initTerminal() {
         btns[1].classList.toggle('active', multi);
     };
 
-    function spawnPuck() {
-        pucks.push({
-            x: 50 + Math.random() * 300,
-            y: 250,
-            dx: (Math.random() - 0.5) * 300,
-            dy: (Math.random() - 0.5) * 300,
-            r: 10
-        });
+    function spawnPuck(intense = false) {
+        const count = intense ? 3 : 1;
+        for(let i=0; i<count; i++) {
+            pucks.push({
+                x: 200,
+                y: 250,
+                dx: 0,
+                dy: 0,
+                r: 10
+            });
+        }
     }
 
     function initBricks() {
@@ -447,6 +466,12 @@ function initTerminal() {
 
     function stopPixelGame() { isGameRunning = false; cancelAnimationFrame(gameLoop); gameContainer.classList.add('hidden'); setTimeout(() => input.focus(), 100); }
 
+    function showOverlay(msg) {
+        const overlay = document.getElementById('game-overlay');
+        overlay.classList.remove('hidden');
+        overlay.querySelector('.game-msg-big').innerText = msg;
+    }
+
     function startGame() {
         if (gameMode === 'hockey') {
             const p2Inp = document.getElementById('p2-name-input');
@@ -462,10 +487,11 @@ function initTerminal() {
             ball.dy = -300 - (gameLevel * 20);
             ballLaunched = true;
         }
-        if (gameMode === 'hockey' && pucks.length > 0 && pucks[0].dy === 0) {
+        if (gameMode === 'hockey' && (pucks.length === 0 || (pucks.length === 1 && pucks[0].dy === 0))) {
+            if (pucks.length === 0) spawnPuck();
             pucks.forEach(p => {
-                p.dx = (Math.random() - 0.5) * 400;
-                p.dy = Math.random() > 0.5 ? 300 : -300;
+                p.dx = (Math.random() - 0.5) * 600;
+                p.dy = Math.random() > 0.5 ? 500 : -500;
             });
         }
     }
@@ -522,9 +548,10 @@ function initTerminal() {
             if (Math.random() < spawnChance) {
                 const rand = Math.random();
                 let type = 'packet';
-                if (rand < 0.12) type = 'virus';
-                else if (rand < 0.16) type = 'firewall';
-                else if (rand < 0.18) type = 'kernel';
+                if (rand < 0.15) type = 'virus';
+                else if (rand < 0.20) type = 'firewall';
+                else if (rand < 0.23) type = 'kernel';
+                else if (rand < 0.26) type = 'pink';
                 items.push({ x: Math.random() * (gCanvas.width - 20), y: -20, w: 16, h: 16, type });
             }
 
@@ -534,6 +561,12 @@ function initTerminal() {
                 item.y += speed;
                 if (item.x < player.x + player.w && item.x + item.w > player.x && item.y < player.y + player.h && item.y + item.h > player.y) {
                     if (item.type === 'packet') { gameScore += 10; document.getElementById('game-stat-score').innerText = gameScore; }
+                    else if (item.type === 'pink') { 
+                        // TRANSFORM ALL VIRUSES TO PACKETS
+                        items.forEach(it => { if(it.type === 'virus') it.type = 'packet'; });
+                        gameScore += 50; 
+                        document.getElementById('game-stat-score').innerText = gameScore;
+                    }
                     else if (item.type === 'firewall') slowTime = 3 + Math.random() * 5;
                     else if (item.type === 'kernel') shield = 3 + Math.random() * 4;
                     else if (item.type === 'virus') { if (shield <= 0) gameOver(); else shield = 0; }
@@ -629,42 +662,80 @@ function initTerminal() {
 
             // Chaos Mode Timer
             chaosTimer += dt;
-            if (chaosTimer > 20) { spawnPuck(); chaosTimer = 0; }
+            if (chaosTimer > 30) { 
+                const count = pucks.length;
+                spawnPuck(true); 
+                // Launch the new pucks immediately if game is running
+                if (!isGamePaused) {
+                    for(let i=count; i<pucks.length; i++) {
+                        pucks[i].dx = (Math.random() - 0.5) * 600;
+                        pucks[i].dy = (Math.random() - 0.5) * 500;
+                    }
+                }
+                chaosTimer = 0; 
+            }
 
-            pucks.forEach((p, idx) => {
+            for (let idx = pucks.length - 1; idx >= 0; idx--) {
+                const p = pucks[idx];
                 p.x += p.dx * dt;
                 p.y += p.dy * dt;
 
-                // Wall Bounces
-                if (p.x < p.r || p.x > gCanvas.width - p.r) { p.dx *= -1; p.x = p.x < p.r ? p.r : gCanvas.width - p.r; }
+                // Side Wall Bounces
+                if (p.x < p.r) { p.dx = Math.abs(p.dx) * 1.1; p.x = p.r; }
+                else if (p.x > gCanvas.width - p.r) { p.dx = -Math.abs(p.dx) * 1.1; p.x = gCanvas.width - p.r; }
                 
-                // Goal Detection
-                if (p.y < 0) { p1.score++; p2.y = 40; pucks.splice(idx, 1); }
-                else if (p.y > gCanvas.height) { p2.score++; p1.y = 460; pucks.splice(idx, 1); }
+                // Velocity Minimum (Prevent slow bugged pucks)
+                if (Math.abs(p.dy) < 50 && !isGamePaused) p.dy = p.y > gCanvas.height/2 ? -100 : 100;
+
+                // Top/Bottom Goal and Walls
+                const goalWidth = 120;
+                const goalStart = (gCanvas.width - goalWidth) / 2;
+                const goalEnd = goalStart + goalWidth;
+
+                if (p.y < p.r) {
+                    if (p.x > goalStart && p.x < goalEnd) {
+                        p1.score++; pucksPlayed++;
+                        document.getElementById('game-stat-score').innerText = `${p1.score} - ${p2.score}`;
+                        document.getElementById('game-stat-level').innerText = `Pucks: ${pucksPlayed}/20`;
+                        p2.y = 40; pucks.splice(idx, 1);
+                        if (pucksPlayed >= 20) { gameOver(); return; }
+                        if (pucks.length === 0) { isGamePaused = true; spawnPuck(); showOverlay(`P1 SCORES! (${pucksPlayed}/20)`); }
+                        continue;
+                    } else {
+                        p.dy *= -1.1; p.y = p.r; 
+                    }
+                } else if (p.y > gCanvas.height - p.r) {
+                    if (p.x > goalStart && p.x < goalEnd) {
+                        p2.score++; pucksPlayed++;
+                        document.getElementById('game-stat-score').innerText = `${p1.score} - ${p2.score}`;
+                        document.getElementById('game-stat-level').innerText = `Pucks: ${pucksPlayed}/20`;
+                        p1.y = 460; pucks.splice(idx, 1);
+                        if (pucksPlayed >= 20) { gameOver(); return; }
+                        if (pucks.length === 0) { isGamePaused = true; spawnPuck(); showOverlay(`P2 SCORES! (${pucksPlayed}/20)`); }
+                        continue;
+                    } else {
+                        p.dy *= -1.1; p.y = gCanvas.height - p.r;
+                    }
+                }
 
                 // Paddle Collisions (Circle-Rect)
                 [p1, p2].forEach(paddle => {
                     const closestX = Math.max(paddle.x - paddle.w/2, Math.min(p.x, paddle.x + paddle.w/2));
-                    const closestY = Math.max(paddle.y - paddle.h/2, Math.min(p.y, paddle.y + paddle.h/2));
-                    const distance = Math.hypot(p.x - closestX, p.y - closestY);
+                    const padY = Math.max(paddle.y - paddle.h/2, Math.min(p.y, paddle.y + paddle.h/2));
+                    const distance = Math.hypot(p.x - closestX, p.y - padY);
 
                     if (distance < p.r) {
-                        p.dy *= -1.1; // Add some spice
-                        p.dx = ((p.x - paddle.x) / (paddle.w / 2)) * 300;
+                        p.dy *= -1.25; 
+                        p.dx = ((p.x - paddle.x) / (paddle.w / 2)) * 500;
                         p.y = paddle.y > gCanvas.height/2 ? paddle.y - paddle.h/2 - p.r : paddle.y + paddle.h/2 + p.r;
                     }
                 });
-            });
-
-            if (pucks.length === 0) {
-                pucks.push({ x: 200, y: 250, dx: 0, dy: 0, r: 10 });
-                isGamePaused = true;
-                document.getElementById('game-overlay').classList.remove('hidden');
-                document.getElementById('game-stat-score').innerText = `${p1.score} - ${p2.score}`;
-                gameScore = p1.score * 100; // Proxy score for leaderboard
             }
 
-            if (p1.score >= 10 || p2.score >= 10) gameOver();
+            gameScore = p1.score * 1000;
+            document.getElementById('game-stat-level').innerText = `Pucks: ${pucksPlayed}/20`;
+
+            if (pucksPlayed >= 20) gameOver();
         }
     }
 
@@ -692,6 +763,7 @@ function initTerminal() {
                 else if (item.type === 'virus') { gCtx.fillStyle = '#f43f5e'; drawStar(gCtx, item.x + 8, item.y + 8, 8, 8, 4); }
                 else if (item.type === 'firewall') { gCtx.fillStyle = '#38bdf8'; gCtx.fillRect(item.x, item.y + 4, 16, 8); }
                 else if (item.type === 'kernel') { gCtx.fillStyle = '#fbbf24'; drawHex(gCtx, item.x + 8, item.y + 8, 8); }
+                else if (item.type === 'pink') { gCtx.fillStyle = '#ff79c6'; gCtx.beginPath(); gCtx.arc(item.x + 8, item.y + 8, 8, 0, Math.PI * 2); gCtx.fill(); gCtx.fillStyle="#fff"; gCtx.fillRect(item.x + 6, item.y + 4, 4, 8); gCtx.fillRect(item.x + 4, item.y + 6, 8, 4); }
             });
         } else if (gameMode === 'brick') {
             // Render Brick Game
@@ -715,10 +787,22 @@ function initTerminal() {
             gCtx.strokeStyle = 'rgba(255,255,255,0.2)';
             gCtx.beginPath(); gCtx.moveTo(0, gCanvas.height/2); gCtx.lineTo(gCanvas.width, gCanvas.height/2); gCtx.stroke();
             
-            // Goals
+            // Walls and Goals
+            const goalWidth = 120;
+            const goalStart = (gCanvas.width - goalWidth) / 2;
+            
+            gCtx.fillStyle = 'rgba(255,255,255,0.1)';
+            // Top Walls
+            gCtx.fillRect(0, 0, goalStart, 5);
+            gCtx.fillRect(goalStart + goalWidth, 0, goalStart, 5);
+            // Bottom Walls
+            gCtx.fillRect(0, gCanvas.height - 5, goalStart, 5);
+            gCtx.fillRect(goalStart + goalWidth, gCanvas.height - 5, goalStart, 5);
+
+            // Goal Glow
             gCtx.fillStyle = '#38bdf8';
-            gCtx.fillRect(gCanvas.width/2 - 40, 0, 80, 5);
-            gCtx.fillRect(gCanvas.width/2 - 40, gCanvas.height - 5, 80, 5);
+            gCtx.fillRect(goalStart, 0, goalWidth, 2);
+            gCtx.fillRect(goalStart, gCanvas.height - 2, goalWidth, 2);
 
             // Paddles
             gCtx.fillStyle = '#f43f5e';
